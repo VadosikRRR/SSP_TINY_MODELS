@@ -1,0 +1,683 @@
+question,example,reasoning,solution
+Write a function to find the roots of a quadratic equation using the quadratic formula.,"Input: a=1, b=-5, c=6; Output: [3, -2]","To find the roots of a quadratic equation ax^2 + bx + c = 0, we use the quadratic formula x = [-b ± sqrt(b^2 - 4ac)] / (2a).",Use the `quadratic` function from the `scipy.roots` module. Here's the Python code:
+Calculate the natural logarithm (ln) of a given number using the Taylor series expansion.,Input: 2; Output: 0.6931471805599453,The Taylor series expansion for ln(1+x) is the sum of the infinite series (x - x^2/2 + x^3/3 - x^4/4 + ...). We can use this series to calculate the natural logarithm of a number by expanding it around 0 and using the given number as the argument.,"import math
+def taylor_series(x, n=10):
+    total = 0
+    for i in range(n):
+        term = (-1)**i * x**(i+1) / (i+1)
+        total += term
+    return total
+def ln(x):
+    return taylor_series(x - 1, 10)"
+Write a function to find the sum of the digits of a number.,Input: 12345; Output: 15,We can solve this problem by iterating through the digits of the number and adding them up.,"def sum_of_digits(n):
+    total = 0
+    while n > 0:
+        total += n % 10
+        n //= 10
+    return total"
+Find the sum of the digits of a number using the given formula: sum = (n // 10) + (n % 10).,"Input: 12345
+Output: 15","1. Calculate the quotient and the remainder of the number when divided by 10.
+2. Add the quotient and the remainder to get the sum of the digits.","def sum_of_digits(n):
+    sum = 0
+    while n > 0:
+        sum += (n % 10)
+        n //= 10
+    return sum"
+Write a function to find the greatest common divisor (GCD) of two numbers using Euclid's algorithm.,"Input: 56, 98; Output: 14",Euclid's algorithm is a method for finding the greatest common divisor (GCD) of two numbers. It works by repeatedly subtracting the smaller number from the larger number until the numbers are equal or one of them becomes zero. The final non-zero number is the GCD.,"```python
+def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+# Test the function
+print(gcd(56, 98)) # Output: 14```"
+Implement a function to calculate the exponential of a number using Taylor Series.,Input: x = 2.0; Output: e^2 ≈ 7.3890560989306494,The Taylor Series for the exponential function is e^x = 1 + x + x^2/2! + x^3/3! + ... + x^n/n!. We can calculate the exponential of a number using this series by summing up the terms up to a certain number of iterations.,"```python
+import math
+
+def taylor_exp(x, n=100): 
+    total = 1.0
+    factorial = math.factorial
+    for i in range(1, n+1): 
+        total += x**i / factorial(i)
+    return total
+
+# Test the function
+x = 2.0
+print(taylor_exp(x)) # Approximately 7.3890560989306494```"
+Implement a function to find the square root of a given number using the Babylonian method.,Input: 9; Output: 3,"We can solve this problem by using the Babylonian method, which is an iterative method for finding the square root of a number. We start with an initial guess and iteratively refine our guess by taking the average of the guess and the number divided by the guess.","def babylonian_sqrt(num):
+    if num < 0:
+        return None
+    guess = num / 2.0
+    while abs(guess**2 - num) > 0.00001:
+        guess = (guess + num / guess) / 2.0
+    return guess"
+"Given a matrix, find the determinant.","Input:
+1 2
+3 4
+Output: -2","The task requires finding the determinant of a 2x2 matrix using the formula: determinant = a * d - b * c, where a, b, c, and d are the elements of the matrix.","```python
+def determinant(matrix):
+    a, b = matrix[0]
+    c, d = matrix[1]
+    return a * d - b * c
+
+input_matrix = [list(map(float, input().split())) for _ in range(2)]
+print(determinant(input_matrix))```"
+"Given a list of integers, find the maximum sum of a contiguous subarray with at most k negative numbers.","Input: [4, -2, 3, -1, 6, -4, 1]
+k = 2
+Output: 7","We can solve this problem using Kadane's algorithm with some modifications. We iterate through the list and maintain two variables: max_so_far, which stores the maximum sum of a contiguous subarray seen so far, and current_sum, which stores the sum of the current subarray. If we encounter a negative number, we subtract it from current_sum and increment a counter that keeps track of the number of negative numbers in the current subarray. If the number of negative numbers exceeds k, we reset current_sum to 0. At the end, we return the maximum of max_so_far and current_sum.","```python
+def max_sum_subarray(arr, k):
+    max_so_far = float('-inf')
+    current_sum = 0
+    neg_count = 0
+    for num in arr:
+        if num < 0:
+            neg_count += 1
+        if neg_count > k:
+            current_sum -= max(current_sum, 0)
+            neg_count -= 1
+        current_sum += num
+        max_so_far = max(max_so_far, current_sum)
+    return max(max_so_far, current_sum)
+
+arr = [4, -2, 3, -1, 6, -4, 1]
+k = 2
+print(max_sum_subarray(arr, k))
+```"
+Find the number of ways to divide a set of positive integers into two non-empty subsets such that the sum of the elements in each subset is equal.,"Input: [1, 2, 3, 4]
+Output: 3
+Input: [1, 2, 3, 4, 5]
+Output: 4
+Input: [1, 2, 3, 4, 5, 6]
+Output: 7","To solve this problem, we can use the principle of inclusion-exclusion. Let n be the number of positive integers, and let S(k) be the number of ways to divide the first k positive integers into two non-empty subsets such that the sum of the elements in each subset is equal. Then, the number of ways to divide the first n positive integers into two non-empty subsets such that the sum of the elements in each subset is equal is given by the formula: S(n) = S(n-1) + S(n-2) - S(n-3) + ... + (-1)^(n-1) * S(0). The base cases are S(0) = 1 (since there is only one way to divide an empty set), S(1) = 1 (since there is only one positive integer), and S(2) = 2 (since there are two ways to divide two positive integers).","Here is a Python solution using the principle of inclusion-exclusion.
+
+def divisor_count(n):
+    if n < 2:
+        return 1
+    if n % 2 == 1:
+        return 0
+    count = 0
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            count += 2
+            if i * i != n:
+                count += divisor_count(n // i)
+    return count
+
+    def ways_to_divide(n):
+        if n == 0:
+            return 1
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+        count = 0
+        for i in range(1, n + 1):
+            if divisor_count(i) == divisor_count(n - i):
+                count += 1
+        return count
+
+    n = val()
+    print(ways_to_divide(n))"
+Implement a function to find the greatest common divisor (GCD) of two numbers using Euclid's algorithm.,"Input: 56, 98; Output: 14","We use Euclid's algorithm, which states that the GCD of two numbers a and b is the same as the GCD of b and the remainder of a divided by b. We repeat this process until the remainder is zero, at which point the GCD is the current value of b.","def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a"
+Write a program to find the sum of the digits of a number.,Input: 12345; Output: 15,We iterate through each digit of the number and add it to a sum.,"def sum_digits(n):
+    sum = 0
+    while n > 0:
+        sum += n % 10
+        n //= 10
+    return sum
+
+    n = 12345
+    print(sum_digits(n))"
+Luba has a function f(x) = ax^2 + bx + c. She wants to find the x-intercepts of the function. Find the x-intercepts of the function.,"Input: a=1, b=-2, c=3
+Output: [-3, 1]","To find the x-intercepts of the function, we need to solve the equation f(x) = 0. We can use the quadratic formula to solve for x: x = (-b ± sqrt(b^2 - 4ac)) / (2a). In the example, the x-intercepts are -3 and 1.","```python
+import cmath
+
+def find_x_intercepts(a, b, c):
+    discriminant = b**2 - 4*a*c
+    if discriminant < 0:
+        return []
+    x1 = (-b - cmath.sqrt(discriminant)) / (2*a)
+    x2 = (-b + cmath.sqrt(discriminant)) / (2*a)
+    return [x1.real, x2.real]
+
+# Find the x-intercepts of the function f(x) = x^2 - 2x + 3
+# a = 1, b = -2, c = 3
+print(find_x_intercepts(1, -2, 3))```"
+"Given a list of integers, find the sum of the squares of the numbers and the sum of the cubes of the numbers.","Input: [1, 2, 3, 4]; Output: (30, 108)","1. Iterate through the list of numbers.
+2. For each number, calculate its square and cube.
+3. Sum the squares and cubes separately.","def sum_of_squares(numbers):
+    return sum(i ** 2 for i in numbers)
+
+def sum_of_cubes(numbers):
+    return sum(i ** 3 for i in numbers)
+
+numbers = [1, 2, 3, 4]
+print(sum_of_squares(numbers), sum_of_cubes(numbers))"
+"Given two vectors, find the dot product of the vectors.","Input: [1, 2, 3]
+[4, 5, 6]
+Output: 32",The dot product of two vectors is a scalar value that represents the product of the corresponding components of the vectors. It is calculated by multiplying each component of the first vector with the corresponding component of the second vector and summing the results.,"```python
+import numpy as np
+
+def dot_product(a, b):
+    return np.dot(a, b)
+```"
+"Given a positive integer n, find the sum of its digits.",Input: 1234; Output: 1 + 2 + 3 + 4 = 10,"To find the sum of the digits of a number, we need to iterate through the number and add each digit to a running total.","```python
+def sum_digits(n):
+    total = 0
+    while n > 0:
+        total += n % 10
+        n //= 10
+    return total
+```"
+"Given a list of integers, find the count of pairs that satisfy the equation (a + b) ^ 2 = 9.","Input: [1, 2, 3, 4, 5]
+Output: 2","To find the count of pairs that satisfy the equation (a + b) ^ 2 = 9, we can use the fact that (a + b) ^ 2 = (a - b) ^ 2 + 2 * a * b. We can then rewrite the equation as (a - b) ^ 2 = 1 and find the solutions for a and b. We can then check if each pair of solutions satisfies the original equation.","```python
+numbers = list(map(int, input().split()))
+count = 0
+
+for i in range(len(numbers)): 
+    for j in range(i+1, len(numbers)): 
+        if (numbers[i] - numbers[j]) ** 2 == 1:
+            count += 1
+print(count)```"
+Write a program to find the number of prime numbers less than or equal to n.,"Input: 20
+Output: 8",The solution involves iterating through the numbers from 2 to n and checking if they are prime by testing if they have any divisors other than 1 and themselves.,"```python
+input_n = int(input())
+primes = [2]
+for i in range(3, input_n + 1): 	is_prime = True
+	for j in range(2, int(i ** 0.5) + 1): 		if i % j == 0: 			is_prime = False
+			break
+	if is_prime: 		primes.append(i)
+print(len(primes))``"
+Implement a function to find the sum of all prime numbers less than or equal to n.,Input: n = 10; Output: 2 + 3 + 5 + 7 = 17,A prime number is a number greater than 1 that has no positive divisors other than 1 and itself. We can use a loop to check if a number is prime and sum up all the prime numbers less than or equal to n.,"def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+sum = 0
+for i in range(2, n + 1):
+    if is_prime(i):
+        sum += i
+print(sum)"
+Implement a function to calculate the natural logarithm (ln) of a number using the Taylor series expansion.,Input: 2; Output: 0.693147180559945309417,"The natural logarithm of a number can be calculated using the Taylor series expansion, which is a power series that converges to the natural logarithm of the number. The series is given by ln(1 + x) = x - x^2/2 + x^3/3 - x^4/4 + ...","```python
+from math import factorial
+
+def ln(x):
+    if x <= 0:
+        raise ValueError('Input must be greater than 0')
+    term = x - 1
+    sum = term
+    for n in range(2, 101):
+        term *= -x / n
+        sum += term / factorial(n)
+    return sum```"
+Write a function that calculates the sum of the squares of the first n natural numbers using the numpy library.,Input: 5; Output: 55,We can use the numpy library to create an array of the first n natural numbers and then calculate the sum of the squares of the elements in the array.,"import numpy as np
+def sum_of_squares(n):
+    arr = np.arange(1, n+1)
+    return arr**2.sum()"
+Find the number of ways to distribute n identical balls into k distinct boxes such that no box is empty.,"Input: n = 5, k = 3
+Output: 20","This problem is a special case of the Stirling numbers of the second kind, which count the number of ways to partition a set into k non-empty subsets. The formula for this case is S(n, k) = (n - 1)! * sum(S(n - i, k - 1) for i in range(1, min(n, k))).","```python
+from math import factorial
+
+def stirling2(n, k):
+    if n < k or k <= 0:
+        return 0
+    if n == k or k == 1:
+        return 1
+    result = 0
+    for i in range(1, min(n, k)):
+        result += stirling2(n - i, k - 1) * factorial(n - 1)
+    return result
+
+# Test the Stirling numbers of the second kind
+print(stirling2(5, 3))```"
+"Given a polynomial p(x) = a_n * x^n + a_(n-1) * x^(n-1) + ... + a_1 * x + a_0, find the roots of the polynomial using the Ferrari's method.","Input: a_n = 1, a_(n-1) = 2, a_(n-2) = 3, a_(n-3) = 4, a_1 = 5, a_0 = 6
+Output: x1 = -1.000000, x2 = 2.000000","1. Calculate the discriminant D = b^2 - 4ac, where a = a_n, b = a_(n-1), and c = a_(n-2). 
+2. If D > 0, the polynomial has two distinct real roots. If D = 0, the polynomial has one real root of multiplicity 2. If D < 0, the polynomial has two complex conjugate roots. 
+3. If D > 0, calculate the roots using the formula x = (-b ± sqrt(D)) / (2a).","from cmath import sqrt
+
+coefficients = [1, 2, 3, 4, 5, 6]
+
+# Calculate a, b, and c
+a, n = coefficients[-1]
+b, n-1 = coefficients[-2]
+c, n-2 = coefficients[-3]
+
+# Calculate the discriminant
+d = b**2 - 4*a*c
+
+# Calculate the roots
+if d > 0:
+    sqrt_d = sqrt(d)
+    x1 = (-b + sqrt_d) / (2*a)
+    x2 = (-b - sqrt_d) / (2*a)
+    print('x1 =', x1, ', x2 =', x2)
+elif d == 0:
+    x = -b / (2*a)
+    print('x =', x, ', x =', x)
+else:
+    real_part = -b / (2*a)
+    imaginary_part = sqrt(-d) / (2*a)
+    x1 = real_part + imaginary_part * 1j
+    x2 = real_part - imaginary_part * 1j
+    print('x1 =', x1, ', x2 =', x2)
+"
+Implement a function to find the sum of the digits of a given number using the concept of modular arithmetic.,"Input: 12345
+Output: 15","To solve this problem, we first read the input data as a string and convert it to an integer. Then, we define a function to find the sum of the digits of a number using modular arithmetic. This function uses a loop to iterate through the digits of the number and calculates the sum of the digits by taking the modulo 10 of the number and dividing it by 10 repeatedly until the number becomes 0. Finally, we return the sum of the digits.","def sum_digits(n):
+    sum = 0
+    while n > 0:
+        sum += n % 10
+        n //= 10
+    return sum
+
+num = int(input())
+print(sum_digits(num))"
+Implement a function to calculate the sine of a number using the Taylor series expansion of the sine function.,"Input: A number.
+Output: The sine of the number with a given precision.","We can solve this problem by using the Taylor series expansion of the sine function, which is a power series that converges to the sine of a number for small values of the argument. We can calculate the nth term of the series and sum up the terms up to a given number of terms to get an approximation of the sine of the number.","```python
+from math import pi, sin
+import numpy as np
+
+def taylor_sin(x, n):
+    terms = np.power(-1, np.arange(n))
+    return sum(terms * (x**(2*i+1)) / np.factorial(2*i+1) for i in range(n))
+
+def sin_approx(x, n):
+    return taylor_sin(x, n) + sin(x) * (1 - taylor_sin(x, n)**2) / 6
+```"
+Write a function to find the greatest common divisor (GCD) of two positive integers using Euclid's algorithm.,"Input: 56, 98; Output: 28","Euclid's algorithm is a method for finding the greatest common divisor (GCD) of two numbers. It works by repeatedly finding the remainder of dividing the larger number by the smaller number, and then repeating the process with the smaller number and the remainder until the remainder is zero. The last non-zero remainder is the GCD.","def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a"
+"Given a list of integers, find the maximum sum of a contiguous subarray with the sum greater than or equal to a given value k.","Input: [1, -2, 3, 10, -4, 7, 2]
+k = 5
+Output: 10 (since the subarray [10] has a sum greater than or equal to k)","We can solve this problem by using the Kadane's algorithm, which involves initializing the maximum sum as the first element of the list, and then iterating through the list and updating the maximum sum by taking the maximum of the current sum and the sum of the current element and the maximum sum found so far.","```python
+
+numbers = list(map(int, input().split()))
+k = int(input())
+
+max_sum = numbers[0]
+current_sum = numbers[0]
+
+for number in numbers[1:]:
+    current_sum = max(number, current_sum + number)
+    max_sum = max(max_sum, current_sum)
+
+if max_sum >= k:
+    print(max_sum)
+else:
+    print('No such subarray exists')
+```"
+"Given a base and a number, find the number of digits in the number.","Input: base=10, number=12345
+Output: 5","To find the number of digits in a number, we can use the formula log10(number) + 1. This formula calculates the number of times we need to divide the number by 10 to reach 1, and adds 1 to account for the remaining digit.","```python
+def num_digits(base, number):
+    return int(math.log10(number)) + 1
+```"
+"Given a positive integer n, find the number of ways to write n as a sum of distinct powers of 2. The order of the powers does not matter.","Input: 7
+Output: 3",We can solve this problem by iterating through the powers of 2 starting from 1 and counting the number of times each power appears in the binary representation of n. We use the bitwise AND operator to extract the lowest set bit of n and shift n to the right to remove the lowest set bit. We repeat this process until n becomes 0.,"def countDistinctPowersOfTwo(n: int) -> int:
+    count = 0
+    while n > 0:
+        if n & 1 == 1:
+            count += 1
+        n >>= 1
+    return count"
+"Given a vector in 3D space, find the angle between the vector and the x-axis in degrees.","Input: [3, 4, 5]; Output: 71.565 (rounded to 2 decimal places)","To find the angle between a vector and the x-axis, we use the arctangent function to find the angle between the vector and the y-axis, and then subtract it from 90 degrees. The arctangent function returns the angle in radians, so we convert it to degrees before printing the result.","```python
+import math
+
+vector = [3, 4, 5]
+angle = math.degrees(math.atan2(vector[1], vector[0])) - 90
+print(round(angle, 2))```"
+Find the roots of a quadratic equation using the quadratic formula.,"Input: a=1, b=-2, c=1
+Output: (-1 + sqrt(5))/2, (-1 - sqrt(5))/2","The quadratic formula is x = (-b ± sqrt(b² - 4ac)) / (2a). This formula can be used to find the roots of a quadratic equation given its coefficients a, b, and c.","```python
+import math
+
+def quadratic_roots(a, b, c):
+    discriminant = b**2 - 4*a*c
+    if discriminant > 0:
+        root1 = (-b + math.sqrt(discriminant)) / (2*a)
+        root2 = (-b - math.sqrt(discriminant)) / (2*a)
+        return root1, root2
+    elif discriminant == 0:
+        root = -b / (2*a)
+        return root, root
+    else:
+        return 'Complex roots' 
+
+a = 1
+b = -2
+c = 1
+print(quadratic_roots(a, b, c))
+```"
+"Implement an exponential function to calculate the compound interest of a given principal amount, annual interest rate, and number of years.","Input: 1000, 0.05, 3; Output: 1334.26","We can use the formula P(1 + r/n)^(nt) to calculate the compound interest, where P is the principal amount, r is the annual interest rate, n is the number of times the interest is compounded per year, and t is the number of years.","import math
+def compound_interest(p, r, n, t):
+    return p * (1 + r/n)**(n*t)"
+"Given a base b and a number n, find the count of digits in the base-b representation of n.","Input: b = 3, n = 27; Output: 3","We can use the formula d = int(log_b(n)) + 1 to find the number of digits in the base-b representation of n, where log_b(n) is the logarithm base b of n. We can calculate log_b(n) iteratively by repeatedly dividing n by b and adding 1 to the count of divisions.","```python
+from math import log
+
+b = int(input())
+n = int(input())
+d = int(log(n, b)) + 1
+print(d)```"
+"Given a matrix of integers, find the maximum sum of a submatrix with a given number of rows and columns.","Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+Rows = 2, Columns = 2
+Output: 25 (submatrix: [[4, 5], [7, 8]])","We use a dynamic programming approach to solve this problem. We initialize a 3D array dp[i][j][k] to store the maximum sum of a submatrix with i rows, j columns, and k starting from the top-left corner. We iterate through the matrix and for each cell, we update the maximum sum for all possible submatrices with i rows, j columns, and k starting from the current cell. The final answer is the maximum value in dp[Rows][Columns][0].","```python
+
+def max_submatrix_sum(matrix, rows, columns):
+    m, n = len(matrix), len(matrix[0])
+    dp = [[[0] * columns for _ in range(rows)] for _ in range(m)]
+    for i in range(rows):
+        for j in range(columns):
+            for k in range(i, m):
+                for l in range(j, n):
+                    dp[i][j][k] = max(dp[i][j][k], matrix[i][j] + sum(matrix[k + 1][j:l + 1]) - dp[k + 1][j][l])
+    return max(max(row) for row in dp[-1])
+
+# Test
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+rows, columns = 2, 2
+print(max_submatrix_sum(matrix, rows, columns))```"
+Implement a function to find the sum of the digits of a number using recursion.,"Input: 12345
+Output: 15","1. If the number is less than 10, return the number itself.
+2. Otherwise, find the sum of the digits of the quotient and the remainder, and recursively call the function with the quotient.","def sum_digits(n):
+    if n < 10:
+        return n
+    else:
+        return n % 10 + sum_digits(n // 10)
+
+num = 12345
+print(sum_digits(num))"
+"Given two vectors, find the dot product of the vectors.","Input: [1, 2, 3], [4, 5, 6]; Output: 52",The dot product of two vectors is a scalar value that represents the product of the corresponding components of the vectors. It is calculated by multiplying each component of the first vector with the corresponding component of the second vector and summing the results.,"```python
+from numpy import dot
+
+def dot_product(vec1, vec2):
+    return dot(vec1, vec2)
+```"
+Implement a function to calculate the sum of the squares of the first n positive integers. The function should return the sum as a float.,"Input: 5
+Output: 55.0",The sum of the squares of the first n positive integers can be calculated using the formula: (n*(n+1)*(2*n+1))/6. This formula is derived from the arithmetic series formula for the sum of the first n terms of the series 1^2 + 2^2 + ... + n^2.,"```python
+def sum_of_squares(n):
+    return (n * (n + 1) * (2 * n + 1)) / 6
+# Example usage:
+print(sum_of_squares(5))```"
+Implement a function to find the determinant of a 3x3 matrix using the formula: det(A) = a(ei - fh) - b(di - fg) + c(dh - eg).,"Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+Output: -44
+","The determinant of a 3x3 matrix can be calculated using the formula: det(A) = a(ei - fh) - b(di - fg) + c(dh - eg), where a, b, c are the elements of the first row, and e, f, g are the elements of the second row, and so on.","```python
+def determinant(matrix):
+    a, b, c = matrix[0]
+    d, e, f = matrix[1]
+    g, h, i = matrix[2]
+    return a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g)
+
+# Example usage:
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print(determinant(matrix))```"
+Implement a function to calculate the Fibonacci sequence up to a given number.,"Input: 10; Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]","The Fibonacci sequence is a series of numbers in which each number is the sum of the two preceding ones, usually starting with 0 and 1. In this task, we will implement a function to calculate the Fibonacci sequence up to a given number using recursion.","def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n - 1) + fibonacci(n - 2)"
+Write a function to find the number of prime numbers less than or equal to n.,Input: 10; Output: 4,"To solve this problem, we first create a function `is_prime(n)` to check if a number is prime. Then, we create a function `count_primes(n)` to find the number of prime numbers less than or equal to n. The function uses a sieve of Eratosthenes algorithm to find the prime numbers.","```python
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def count_primes(n):
+    primes = [2] 
+    sieve = [True] * (n + 1)
+    for p in primes:
+        for i in range(p*p, n + 1, p):
+            sieve[i] = False
+    count = sum(sieve)
+    return count
+
+def main():
+    n = 10
+    print(count_primes(n))
+
+if __name__ == '__main__':
+    main()```"
+Implement a matrix-based solution to find the determinant of a 3x3 matrix.,"Input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]; Output: -45",The problem requires finding the determinant of a given 3x3 matrix. We can use a matrix-based solution where we calculate the determinant using the formula for a 3x3 matrix: det(A) = a11*(b22*c33 - b32*c22) - a12*(b21*c33 - b31*c23) + a13*(b21*c32 - b31*c22).,"```python
+import numpy as np
+def determinant(A):
+    a11, a12, a13 = A[0]
+    a21, a22, a23 = A[1]
+    a31, a32, a33 = A[2]
+    return a11*(a22*a33 - a23*a32) - a12*(a21*a33 - a23*a31) + a13*(a21*a32 - a22*a31)
+
+# Test cases
+print(determinant([[1, 2, 3], [4, 5, 6], [7, 8, 9]])) # Output: -45
+print(determinant([[1, 2, 3], [4, 5, 6], [7, 8, 9]])) # Output: -45
+print(determinant([[1, 2, 3], [4, 5, 6], [7, 8, 9]])) # Output: -45
+```"
+Find the number of ways to divide a set of positive integers into two non-empty subsets such that the sum of the elements in each subset is equal.,"Input: [3, 1, 4, 6, 5]
+Output: 3","To solve this problem, we can use the concept of partition function. The partition function P(n) is the number of ways to partition a set of positive integers into non-empty subsets such that the sum of the elements in each subset is equal. We can use dynamic programming to solve this problem by defining P(n) as the sum of P(k) for all k such that k < n and n - k is also a valid partition. The base case is P(0) = 1, which represents the empty partition. The final answer is P(sum) - 1, where sum is the sum of the input numbers.","```python
+def partition(numbers):
+    n = sum(numbers)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for number in numbers:
+        for i in range(number, n + 1):
+            dp[i] += dp[i - number]
+    return dp[n] - 1
+```"
+Implement a function to find the sum of the digits of a given number.,Input: 12345; Output: 15,"To find the sum of the digits of a given number, we can iterate through the digits of the number and add them up.","def sum_of_digits(n):
+    total = 0
+    while n > 0:
+        total += n % 10
+        n //= 10
+    return total"
+"Given a matrix A, find the determinant of the matrix using the Laplace expansion along the first row.","Input: [[1, 2], [3, 4]]
+Output: 2","1. If the matrix has only one row or one column, return the value of that row or column. 
+2. For each element in the first row, create a new matrix by removing that row and the corresponding column. 
+3. Multiply the element by the determinant of the new matrix and sum up the results. 
+4. Return the result.","```python
+A = list(map(list, input().split('
+')))
+def determinant(A):
+    if len(A) == 1:
+        return A[0][0]
+    determinant_sum = 0
+    for i in range(len(A)):
+        determinant_sum += A[0][i] * (-1) ** i * determinant(list(map(list, zip(*[A[j] for j in range(1, len(A)) if j != i]))) )
+    return determinant_sum
+
+print(determinant(A))```"
+Implement a function to find the sum of the digits of a number using only Python's built-in functions.,"Input: number = 12345.
+Output: 15","To find the sum of the digits of a number, we can iterate through each digit of the number and add it to a running total. We can convert the number to a string, split it into a list of digits, and then iterate through the list to find the sum of the digits.","def sum_digits(number):
+    return sum(int(digit) for digit in str(number))
+
+# Test the function
+number = 12345
+print(sum_digits(number))"
+"Given a positive integer n, find the number of ways to write n as a sum of distinct powers of 2.",Input: n=7; Output: 3,"We can use dynamic programming to solve this problem. Initialize a 1D array dp of size n+1 where dp[i] represents the number of ways to write i as a sum of distinct powers of 2. For each i, we check if i is a power of 2. If it is, dp[i] = 1. If it is not, we set dp[i] to the sum of dp[i/2] and dp[i-pow2], where pow2 is the smallest power of 2 greater than i/2.","```python
+def distinct_powers_of_two(n):
+    dp = [0 for i in range(n+1)]
+    dp[0] = 1
+    pow2 = 2
+    for i in range(1, n+1):
+        if i & 1 == 0:
+            dp[i] = dp[i//2] + dp[i-pow2]
+            pow2 *= 4
+    return dp[n]
+```"
+Implement a function to calculate the factorial of a number using the exponential function.,"Input: 5
+Output: 120",The factorial of a number n (denoted as n!) is the product of all positive integers less than or equal to n. The exponential function e^x can be used to approximate the factorial of a number for large values of n. The approximation is given by n! ≈ sqrt(2πn) * (n/e)^n.,"```python
+import math
+
+def factorial(n): 
+    if n == 0: 
+        return 1
+    else: 
+        return math.sqrt(2 * math.pi * n) * (n / math.e) ** n
+
+# Test the factorial function
+print(factorial(5))
+```"
+Write a program to find the sum of the digits of a given number.,Input: 12345; Output: 15,"To find the sum of the digits of a given number, we can iterate through the number, convert each digit to an integer, and add them up.","```python
+def sum_digits(n):
+    total = 0
+    while n > 0:
+        total += n % 10
+        n //= 10
+    return total
+
+num = int(input())
+print(sum_digits(num))```"
+Write a function to find the smallest prime number greater than n.,Input: 15; Output: 17,"To solve this problem, we first check if n is prime. If it is, we return n. If it is not, we start a loop from n + 1 and check each number to see if it is prime. The first number that is prime is the answer.","import math
+def smallest_prime(n):
+	if n <= 1:
+		return 2
+	is_prime = [True] * (n + 1)
+	is_prime[0] = False
+	is_prime[1] = False
+
+	for i in range(2, int(math.sqrt(n)) + 1):
+		if is_prime[i]:
+			for j in range(i * i, n + 1, i):
+				is_prime[j] = False
+	for i in range(n + 1, len(is_prime)):
+		if is_prime[i]:
+			return i"
+Implement a function to calculate the sum of the digits of a number using exponentiation.,"Input: 12345
+Output: 15","The problem can be solved by using exponentiation to raise 10 to the power of the number of digits, and then subtracting 1 to account for the fact that each digit contributes a factor of 10 to the total.","```python
+def sum_of_digits(number):
+    digits = [int(digit) for digit in str(number)]
+    total = 10 ** len(digits) - 1
+    for digit in digits:
+        total -= 10 ** digits.index(digit)
+    return total
+
+number = 12345
+print(sum_of_digits(number))```"
+Write a function that calculates the sum of the digits of a given integer using the Scipy library.,Input: 12345; Output: 15,"To solve this problem, we use the Scipy library's digits function to get a list of the digits of the integer and then sum them up.","from scipy.special import digits
+def sum_digits(n):
+    digits_list = digits(n)
+    return sum(digits_list)"
+"Given a positive integer n, find the number of ways to write n as a sum of distinct powers of 2.","Input: 8
+Output: 3 (2^3, 2^2 + 2^1, 2^1 + 2^1 + 2^0)","The problem can be solved by using dynamic programming. We can define a function dp(i) to represent the number of ways to write i as a sum of distinct powers of 2. If i is a power of 2, dp(i) = 1. Otherwise, dp(i) = dp(i - 2^k) for all k such that 2^k <= i.","```python
+def distinct_powers_of_two(n: int) -> int:
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        for k in range(1, i):
+            if i - (1 << k) >= 0 and dp[i - (1 << k)]:
+                dp[i] += dp[i - (1 << k)]
+    return dp[n] - 1
+```"
+Implement a function to find the number of ways to divide a given number into two parts such that the difference between the two parts is a given value.,Input: A number (n) and a value (d); Output: The number of ways to divide n into two parts with a difference of d.,"We can solve this problem using dynamic programming. We create an array dp of size n+1, where dp[i] represents the number of ways to divide i into two parts with a difference of d. We initialize dp[0] = 1 and dp[1] = 1. For each i from 2 to n, we iterate through the possible values of the first part (j) such that j < i and the difference between i and j is d or d+1. We update dp[i] as dp[i] += dp[j]. The final answer is dp[n].","```python
+def num_ways(n, d): 
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 1
+    for i in range(2, n + 1): 
+        for j in range(1, i): 
+            if (i - j) <= d or (i - j) <= d + 1: 
+                dp[i] += dp[j]
+    return dp[n]
+
+def __starting_point(): 
+    n = 10
+    d = 3
+    print(num_ways(n, d))
+__starting_point()
+```"
+"Given a square matrix of integers, the task is to find the maximum sum of any 2x2 submatrix.","Input: [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]; Output: 33","To solve this problem, we can slide a 2x2 window across the matrix and calculate the sum of each submatrix. We can then compare the sum of each submatrix with the maximum sum found so far. The maximum sum among all submatrices is the solution.","Here is a Python solution that uses the sliding window technique to find the maximum sum of any 2x2 submatrix.
+
+```
+import numpy as np
+
+def max_2x2_submatrix_sum(matrix):
+    m, n = matrix.shape
+    max_sum = float('-inf')
+    for i in range(m - 1):
+        for j in range(n - 1):
+            submatrix = matrix[i:i+2, j:j+2]
+            sum = np.sum(submatrix)
+            max_sum = max(max_sum, sum)
+    return max_sum
+
+def __starting_point():
+    matrix = np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+    print(max_2x2_submatrix_sum(matrix))
+
+__starting_point()
+```"
+"Given a base-10 number, find the number of digits that are multiples of 3.",Input: 123456; Output: 3,"We iterate through the digits of the number from right to left. If a digit is a multiple of 3, we increment a counter. If a digit is not a multiple of 3, we continue to the next digit.","def count_multiples_of_3(n):
+    count = 0
+    while n > 0:
+        digit = n % 10
+        if digit == 0 or digit == 3 or digit == 6:
+            count += 1
+        n //= 10
+    return count"
+Implement a function to calculate the natural logarithm (ln) of a number using the Taylor series expansion.,Input: 2; Output: 0.6931471805599453,"To solve this problem, we use the Taylor series expansion of the natural logarithm: ln(1 + x) = x - x^2/2 + x^3/3 - x^4/4 + ... for |x| < 1. We can calculate the natural logarithm of a number by iteratively applying this formula to x - 1 until x is close enough to 1.","import math
+
+def ln_taylor(x, precision=0.00001):
+    if x <= 0:
+        raise ValueError('Input must be positive.')
+    if x == 1:
+        return 0
+    term, sum, x_minus_one = 1, 0, x - 1
+    while abs(x_minus_one - 1) > precision:
+        sum += term
+        x_minus_one -= 1
+        term *= -x_minus_one / (term + 1)
+    return sum
+
+# Example usage:
+print(ln_taylor(2))"
+Write a Python function to calculate the natural logarithm (ln) of a number using the Taylor series expansion.,"Input: 2
+Output: 0.6931471805599453","The Taylor series expansion for ln(1 + x) is given by the formula: ln(1 + x) = x - x^2/2 + x^3/3 - x^4/4 + ...
+We can use this formula to calculate the natural logarithm of a number by iterating the series until a desired precision is achieved.","```python
+from math import e
+
+def taylor_series(x, n):
+    sum = x
+    for i in range(1, n):
+        sum += (-1) ** (i - 1) * x ** i / i
+    return sum
+
+def ln(x, n=100000):
+    return taylor_series(x - 1, n) * e
+
+# Test
+print(ln(2))
+```"
+"Given a square matrix A of size n x n, find the determinant of the matrix.","Input: A = [[1, 2], [3, 4]]; Output: -2","To solve this problem, we use the formula for the determinant of a 2x2 matrix: det(A) = a*d - b*c, where a, b, c, and d are the elements of the matrix A.","import numpy as np
+
+A = np.array([[1, 2], [3, 4]])
+
+determinant = A[0, 0] * A[1, 1] - A[0, 1] * A[1, 0]
+print(determinant)"
+Implement a function to calculate the sum of the digits of a number using exponentiation. The number can be any positive integer.,Input: 12345,"The reasoning is to use exponentiation to calculate the sum of the digits of a number. Each digit is raised to the power of the number of digits in the number, and the results are summed.","```python
+def sum_digits(n):
+    return sum(int(digit) ** len(str(n)) for digit in str(n))
+
+num = int(input())
+print(sum_digits(num))```"
+"Find the maximum value of the function f(x) = x^3 - 3x^2 + 2x - 4 over the interval [0, 3]","Input: f(x) = x^3 - 3x^2 + 2x - 4
+Output: 16","We can find the maximum value of the function by finding the critical points and checking their values in the interval. The critical points are the solutions of the derivative of the function, which is f'(x) = 3x^2 - 6x + 2. We can solve this equation using the quadratic formula or factoring. The critical points are x = 1 and x = 2. We can check the values of the function at these points and in the interval to find the maximum value.","```python
+import sympy
+
+# Define the function
+f = sympy.Function('f')
+f = f(x) * sympy.sympify(x**3 - 3*x**2 + 2*x - 4)
+
+# Find the derivative of the function
+df = sympy.diff(f, x)
+
+# Solve the derivative for the critical points
+critical_points = sympy.solve(df, x)
+
+# Check the values of the function at the critical points and in the interval
+max_value = max(f.evalf(subs={x: cp}) for cp in critical_points if cp >= 0 and cp <= 3)
+
+print(max_value)
+```"

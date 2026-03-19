@@ -1,0 +1,1281 @@
+question,example,reasoning,solution
+Write a function to find the union of two sets.,"Input: {1, 2, 3} and {3, 4, 5}; Output: {1, 2, 3, 4, 5}","To find the union of two sets, we combine the elements of both sets without duplicates.",Use the built-in `union` method of the set object. Here's the Python code:
+Implement a dictionary to store the frequency of each word in a given sentence.,"Input: 'The quick brown fox jumps over the lazy dog'; Output: {'The': 1, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'the': 2, 'lazy': 1, 'dog': 1}","We create a dictionary and iterate through each word in the sentence. If the word is already in the dictionary, we increment its count by 1. If the word is not in the dictionary, we add it with a count of 1.","def word_frequency(sentence):
+    words = sentence.split()
+    freq = {} 
+    for word in words:
+        if word in freq:
+            freq[word] += 1
+        else:
+            freq[word] = 1
+    return freq"
+"Write a function to implement a stack using a list and perform the following operations: push, pop, and peek.","Input: push(3), push(2), pop(), peek(), Output: [3, 2], 2",We can implement a stack using a list by adding elements to the end of the list (push) and removing elements from the end of the list (pop). The top element of the stack can be accessed using the last element of the list (peek).,"class Stack:
+    def __init__(self):
+        self.stack = []
+    def push(self, item):
+        self.stack.append(item)
+    def pop(self):
+        if not self.is_empty():
+            return self.stack.pop()
+        else:
+            raise IndexError('Stack is empty')
+    def peek(self):
+        if not self.is_empty():
+            return self.stack[-1]
+        else:
+            raise IndexError('Stack is empty')
+    def is_empty(self):
+        return len(self.stack) == 0"
+Find the first non-repeating character in a string.,"Input: 'programming'
+Output: 'r'","1. Initialize an empty dictionary to store the count of each character in the string.
+2. Iterate through the string and update the count of each character in the dictionary.
+3. Iterate through the dictionary and find the first character that appears only once.
+4. Return the character.","def first_non_repeating(s):
+    count = {} 
+    for c in s:
+        if c in count:
+            count[c] += 1
+        else:
+            count[c] = 1
+    for c in count:
+        if count[c] == 1:
+            return c"
+Implement a stack data structure to perform depth-first search (DFS) on a graph.,"Input: Adjacency list of a graph:
+[ [1, 2, 3], [0, 2], [0, 1, 3, 4], [1, 3, 4], [2, 3] ]; Output: [0, 1, 3, 2, 4]","To perform DFS on a graph, we can use a stack to keep track of the nodes to visit next. We start from an arbitrary node, push it onto the stack, and mark it as visited. Then, we pop the top node from the stack and explore its unvisited neighbors by pushing them onto the stack. We repeat this process until the stack is empty.","```python
+from collections import defaultdict
+
+class Graph:
+    def __init__(self, vertices):
+        self.graph = defaultdict(list)
+        self.V = vertices
+
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
+
+    def DFS(self, v, visited):
+        visited[v] = True
+        print(v, end=' ') 
+        for neighbor in self.graph[v]:
+            if visited[neighbor] is False:
+                self.DFS(neighbor, visited)
+
+    def dfs(self):
+        visited = [False] * self.V
+        for node in range(self.V):
+            if visited[node] is False:
+                self.DFS(node, visited)
+
+# Test the function
+graph = Graph(5)
+graph.add_edge(0, 1)
+graph.add_edge(0, 2)
+graph.add_edge(1, 3)
+graph.add_edge(1, 4)
+graph.add_edge(2, 3)
+
+graph.dfs() # Output: 0 1 3 2 4```"
+"Implement a Set data structure that supports the following operations: insert, delete, check membership, union, intersection, and difference.","Input: set1 = {'a', 'b', 'c'}; set2 = {'c', 'd', 'e'}; Output: set1 = {'a', 'b', 'c'}; set2 = {'c', 'd', 'e'}; set1.union(set2) = {'a', 'b', 'c', 'd', 'e'}; set1.intersection(set2) = {'c'}; set1.difference(set2) = {'a', 'b'}","To implement a Set data structure, we can use a Hash Table or a Tree-based structure. The Set data structure supports the following operations: insert, delete, check membership, union, intersection, and difference. We will use a Hash Table for this implementation.","```python
+class Set: 
+    def __init__(self): 
+        self.data = {} 
+
+    def add(self, item): 
+        if item not in self.data: 
+            self.data[item] = 1
+
+    def remove(self, item): 
+        if item in self.data: 
+            del self.data[item]
+
+    def contains(self, item): 
+        return item in self.data
+
+    def union(self, other): 
+        result = Set() 
+        for item in self.data: 
+            result.add(item)
+        for item in other.data: 
+            result.add(item)
+        return result
+
+    def intersection(self, other): 
+        result = Set() 
+        for item in self.data: 
+            if item in other.data: 
+                result.add(item)
+        return result
+
+    def difference(self, other): 
+        result = Set() 
+        for item in self.data: 
+            if item not in other.data: 
+                result.add(item)
+        return result
+
+# Test the functions
+set1 = Set()
+set1.add('a')
+set1.add('b')
+set1.add('c')
+set2 = Set()
+set2.add('c')
+set2.add('d')
+set2.add('e')
+print(set1)
+print(set2)
+print(set1.union(set2))
+print(set1.intersection(set2))
+print(set1.difference(set2))```"
+Implement a dictionary to store the frequency of words in a given text.,"Input: 'the quick brown fox jumps over the lazy dog'; Output: {'the': 1, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}","We can solve this problem by iterating through the text and using a dictionary to store the frequency of each word. We split the text into words and iterate through the words, updating the frequency of each word in the dictionary if it already exists or adding it to the dictionary if it doesn't.","def word_frequency(text):
+    words = text.split()
+    freq = {} 
+    for word in words:
+        if word in freq:
+            freq[word] += 1
+        else:
+            freq[word] = 1
+    return freq"
+Create a graph and find the shortest path between two nodes.,"Input: (A, B, C, D, E, F)
+(A, B), (A, C), (B, D), (C, D), (C, E), (D, E), (D, F), (E, F)
+A
+F
+Output: 4","The task requires creating a graph and finding the shortest path between two nodes using Dijkstra's algorithm. The graph is represented as a list of tuples, where each tuple represents an edge between two nodes.","```python
+from collections import defaultdict
+
+input_nodes = list(map(str, input().split()))
+edges = [tuple(map(str, edge)) for edge in list(map(lambda x: x.split(','), input().split()))]
+start_node = input()
+end_node = input()
+
+graph = defaultdict(list)
+for edge in edges:
+    graph[edge[0]].append(edge[1])
+    graph[edge[1]].append(edge[0])
+
+def dijkstra(graph, start_node, end_node):
+    distances = {node: float('inf') for node in graph}
+    distances[start_node] = 0
+    visited = set()
+    while len(visited) < len(graph):
+        current_node = min(graph, key=lambda node: distances.get(node, float('inf')))
+        if current_node not in visited:
+            visited.add(current_node)
+            for neighbor in graph[current_node]:
+                if neighbor not in visited:
+                    new_distance = distances[current_node] + 1
+                    if new_distance < distances.get(neighbor, float('inf')):
+                        distances[neighbor] = new_distance
+    return distances[end_node]
+
+print(dijkstra(graph, start_node, end_node))```"
+"Implement a Stack data structure using Python's built-in list and implement the push, pop, and peek operations.","Input: push(3)
+push(5)
+peek()
+pop()
+Output: 5
+3","A Stack is a Last-In-First-Out (LIFO) data structure. We can implement a Stack using a list in Python by adding elements to the end of the list and removing elements from the end of the list. The push operation adds an element to the top of the stack, the pop operation removes an element from the top of the stack, and the peek operation returns the top element of the stack without removing it.","```python
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        if not self.is_empty():
+            return self.items.pop()
+        else:
+            raise IndexError('The stack is empty')
+
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+        else:
+            raise IndexError('The stack is empty')
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+stack = Stack()
+stack.push(3)
+stack.push(5)
+print(stack.peek())
+stack.pop()
+print(stack.pop())
+```"
+Implement a binary tree data structure using Python's built-in list data structure.,"Input: A list of integers [1, 2, 3, 4, 5, 6, 7]
+Output: A binary tree with the root node as 1, left child as 2 and right child as a subtree with root node as 3, left child as 4 and right child as a subtree with root node as 5, left child as 6 and right child as 7.
+Note: The binary tree should be represented as a list of lists, where each inner list represents a node and its children, and the empty list represents a null child.","A binary tree is a tree in which each node has at most two children, called the left child and the right child. The binary tree can be represented as a list of lists, where each inner list represents a node and its children. The root node is the first element of the list, and its children are the elements of the list after the root node. If a node has no children, it is represented as an empty list.","Here is a Python solution using Python's built-in list data structure.
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def build_tree(values):
+    if not values:
+        return None
+    root = Node(values[0])
+    left_values = values[1:] // 2
+    right_values = values[1:] - left_values
+    root.left = build_tree(left_values)
+    root.right = build_tree(right_values)
+    return root
+
+    def print_tree(node):
+        if node is None:
+            return
+        print(node.value)
+        print_tree(node.left)
+        print_tree(node.right)
+
+    values = [1, 2, 3, 4, 5, 6, 7]
+    tree = build_tree(values)
+    print_tree(tree)"
+Implement a graph data structure to represent a directed acyclic graph (DAG) and find the topological sort of the graph.,"Input: A directed graph with nodes A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, where A -> B, A -> C, B -> D, B -> E, C -> D, C -> F, D -> G, D -> H, E -> I, F -> G, F -> H, G -> J, H -> J, I -> K, J -> L, K -> M, L -> M, M -> N, N -> O, N -> P, O -> Q, P -> R, P -> S, Q -> T, R -> U, R -> V, S -> U, S -> V, T -> W, T -> X, U -> Y, V -> Y, W -> Z, X -> Z; Output: [A, B, C, D, E, F, G, H, I, K, J, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]",We represent the graph using adjacency lists and perform a Depth-First Search (DFS) to find the topological sort. We use a visited list to keep track of the nodes we have visited and a stack to store the nodes in topological order.,"class Graph:
+    def __init__(self):
+        self.adj = {} 
+    def add_edge(self, u, v):
+        if u not in self.adj:
+            self.adj[u] = []
+        self.adj[u].append(v)
+    def topological_sort(self):
+        visited = set()
+        stack = []
+        for node in self.adj:
+            if node not in visited:
+                self.dfs(node, visited, stack)
+        return list(reversed(stack))
+    def dfs(self, node, visited, stack):
+        visited.add(node)
+        for neighbor in self.adj[node]:
+            if neighbor not in visited:
+                self.dfs(neighbor, visited, stack)
+        stack.append(node)"
+Write a program to find the second largest number in a list.,"Input: [1, 3, 5, 7, 9]; Output: 7",We first find the largest number in the list and then remove it from the list. The remaining largest number is the second largest number.,"def second_largest(arr):
+    max1, max2 = float('-inf'), float('-inf')
+    for num in arr:
+        if num > max1:
+            max2 = max1
+            max1 = num
+        elif num > max2 and num != max1:
+            max2 = num
+    if max1 == max2:
+        return -1
+    return max2
+
+    arr = [1, 3, 5, 7, 9]
+    print(second_largest(arr))"
+Luba has an array of integers. She wants to find the maximum sum of a contiguous subarray. Find the maximum sum of a contiguous subarray.,"Input: [1, -2, 3, 10, -4, 7, 2, -5]
+Output: 18","To find the maximum sum of a contiguous subarray, we can use Kadane's algorithm. We initialize the maximum sum to the first element of the array. For each element, we update the maximum sum to the maximum of the current sum and the sum of the current element and the maximum sum of the previous elements. In the example, the maximum sum of a contiguous subarray is 18, which is the sum of the elements from index 3 to index 6.","```python
+def max_subarray_sum(arr):
+    max_so_far = arr[0]
+    max_ending_here = arr[0]
+    for i in range(1, len(arr)):
+        max_ending_here = max(arr[i], max_ending_here + arr[i])
+        max_so_far = max(max_so_far, max_ending_here)
+    return max_so_far
+
+arr = [1, -2, 3, 10, -4, 7, 2, -5]
+print(max_subarray_sum(arr))```"
+Implement a Min Heap using an array to sort a list of numbers in ascending order.,"Input: [5, 3, 6, 1, 4]; Output: [1, 3, 4, 5, 6]","1. Initialize an empty list to store the heap.
+2. Insert the numbers into the heap using the build_heap function.
+3. Implement the heapify function to maintain the heap property.
+4. Implement the extract_min function to remove and return the smallest number.","def build_heap(arr):
+    n = len(arr)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+def heapify(arr, n, i):
+    left = 2 * i + 1
+    right = 2 * i + 2
+    smallest = i
+    if left < n and arr[left] < arr[smallest]:
+        smallest = left
+    if right < n and arr[right] < arr[smallest]:
+        smallest = right
+    if smallest != i:
+        arr[i], arr[smallest] = arr[smallest], arr[i]
+        heapify(arr, n, smallest)
+
+def extract_min(arr):
+    if len(arr) == 0:
+        return None
+    temp = arr[0]
+    arr[0] = arr[len(arr) - 1]
+    arr.pop()
+    heapify(arr, len(arr) - 1, 0)
+    return temp
+
+numbers = [5, 3, 6, 1, 4]
+heap = []
+build_heap(numbers)
+for number in numbers:
+    heap.append(number)
+print([extract_min(heap) for _ in range(len(numbers))])"
+"Given an array of integers, find the contiguous subarray with the maximum sum.","Input: [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+Output: 6","To find the maximum sum subarray, we can use the Kadane's algorithm. The idea is to keep track of the maximum sum subarray ending at the current index and the maximum sum subarray found so far.","```python
+def maxSubArraySum(arr):
+    max_so_far = arr[0]
+    current_max = arr[0]
+    for i in range(1, len(arr)):
+        current_max = max(arr[i], current_max + arr[i])
+        max_so_far = max(max_so_far, current_max)
+    return max_so_far
+```"
+"Given a dictionary containing words, find the word with the maximum number of unique characters.","Input: {'cat': 3, 'dog': 2, 'rat': 3, 'bat': 3, 'mat': 3}; Output: 'bat'","To find the word with the maximum number of unique characters, we need to iterate through the dictionary and count the number of unique characters in each word. Then, we need to find the word with the maximum count.","```python
+def max_unique_char_word(words_dict):
+    max_count = 0
+    max_word = None
+    for word, count in words_dict.items():
+        unique_chars = set(word)
+        if len(unique_chars) > max_count:
+            max_count = len(unique_chars)
+            max_word = word
+    return max_word
+```"
+"Given a binary tree, find the maximum sum of a path from any node to any leaf.","Input: [1, 2, 3, 4, None, 5, None, 6, None, 7]
+Output: 18","To find the maximum sum of a path from any node to any leaf, we can use a depth-first search (DFS) algorithm. In each recursive call, we calculate the sum of the current node and the maximum sum of the left and right subtrees. We keep track of the maximum sum found so far.","```python
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.right.right = TreeNode(5)
+root.right.right.right = TreeNode(6)
+root.right.right.right.right = TreeNode(7)
+
+max_sum = float('-inf')
+def dfs(node):
+    if node is None:
+        return 0
+    left_sum = dfs(node.left)
+    right_sum = dfs(node.right)
+    max_sum_left_to_right = max(left_sum, 0) + node.val + right_sum
+    max_sum_right_to_left = max(right_sum, 0) + node.val + left_sum
+    max_sum = max(max_sum_left_to_right, max_sum_right_to_left)
+    max_sum = max(max_sum, node.val)
+    return max_sum
+
+max_sum = dfs(root)
+print(max_sum)```"
+Implement a program that uses a stack to find the postfix evaluation of an arithmetic expression.,"Input: 3 4 + 5 *
+Output: 45","The solution involves initializing an empty stack and iterating through the input string. For each operator, it performs the operation on the top two elements of the stack and removes them. For each number, it pushes it onto the stack. Finally, it returns the result on the stack.","```python
+input_str = input()
+stack = []
+ops = {'+': lambda a, b: a + b, '-': lambda a, b: a - b, '*': lambda a, b: a * b, '/': lambda a, b: a / b}
+for token in input_str.split(): 	if token.isdigit(): 		stack.append(int(token)) 	else: 		operand2 = stack.pop() 		operand1 = stack.pop() 		stack.append(ops[token](operand1, operand2))
+print(stack[0])``"
+Implement a dictionary to store the frequency of words in a given text. The text is a string.,"Input: text = 'The quick brown fox jumps over the lazy dog. The quick brown fox jumps again.'; Output: {'The': 2, 'quick': 2, 'brown': 2, 'fox': 2, 'jumps': 2, 'over': 1, 'lazy': 1, 'dog.': 1}","A dictionary is a collection of key-value pairs. In this problem, we want to store the frequency of each word in a given text. We can split the text into words, create a dictionary, and increment the count for each word as we encounter it.","text = 'The quick brown fox jumps over the lazy dog. The quick brown fox jumps again.'
+words = text.split()
+dict = {} 
+for word in words:
+    if word in dict:
+        dict[word] += 1
+    else:
+        dict[word] = 1
+dict['.' + text[-1]] += 1
+print(dict)"
+Implement a Graph data structure using adjacency list representation.,"Input: Vertices: 5; Edges: (0, 1), (0, 3), (1, 2), (1, 3), (1, 5), (2, 4), (3, 4); Output: [[1, 3], [0, 2, 3], [0, 1, 5], [1, 3, 4], [2, 4]]",A Graph is a non-linear data structure that can be used to represent a network of objects where each object is connected to other objects. The adjacency list representation is one of the ways to represent a graph where each vertex is represented by a list of its adjacent vertices.,"```python
+class Graph:
+    def __init__(self, vertices):
+        self.graph = [[0 for _ in range(vertices)] for _ in range(vertices)]
+
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
+
+# Test the Graph data structure
+graph = Graph(5)
+graph.add_edge(0, 1)
+graph.add_edge(0, 3)
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(1, 5)
+graph.add_edge(2, 4)
+graph.add_edge(3, 4)
+print(graph.graph)```"
+Write a function that finds the intersection of two sets using the & operator.,"Input: set1 = {1, 2, 3, 4}; set2 = {2, 3, 4, 5}; Output: {2, 3, 4}",We can use the & operator to find the intersection of two sets. This operator returns a new set that contains only the elements that are present in both sets.,"def intersection(set1, set2):
+    return set1 & set2"
+Implement a Queue data structure using Python's built-in list.,"Input: Enqueue 1, 2, 3
+Dequeue
+Enqueue 4
+Dequeue
+Dequeue
+Output: [1, 2, 3, 4]","A Queue is a collection of elements with a first-in-first-out (FIFO) ordering. In Python, we can implement a Queue using a list and two pointers: one for the front of the queue and another for the rear.","```python
+class Queue: 
+    def __init__(self): 
+        self.queue = []
+    
+    def enqueue(self, item): 
+        self.queue.append(item)
+    
+    def dequeue(self): 
+        if len(self.queue) == 0:
+            return None
+        return self.queue.pop(0)
+    
+    def size(self): 
+        return len(self.queue)
+
+# Test the Queue
+q = Queue()
+q.enqueue(1)
+q.enqueue(2)
+q.enqueue(3)
+print(q.size())
+print(q.dequeue())
+print(q.size())
+q.enqueue(4)
+print(q.size())
+print(q.dequeue())
+print(q.dequeue())
+print(q.dequeue())
+print(q.size())```"
+"Given a graph represented as an adjacency list, find the shortest path between two nodes using Breadth-First Search (BFS).","Input: adjacency_list = [ [], [2, 3], [1], [1, 3], [2, 4] ], start_node = 0, end_node = 4
+Output: 3","1. Initialize a queue to store the nodes to be visited. 
+2. Initialize a dictionary to store the shortest path from the start node to each node. 
+3. Enqueue the start node and set its distance to 0. 
+4. While the queue is not empty, dequeue a node and explore its neighbors. If a neighbor is not visited, enqueue it with its distance updated. 
+5. If the end node is dequeued, return the distance from the start node to the end node.","from collections import defaultdict, deque
+
+adj_list = defaultdict(list)
+distances = {node: float('inf') for node in adj_list}
+distances[0] = 0
+prev = {node: None for node in adj_list}
+queue = deque([(0, 0)])
+
+while queue:
+    node, distance = queue.popleft()
+    for neighbor in adj_list[node]:
+        if distances[neighbor] > distances[node] + 1:
+            distances[neighbor] = distances[node] + 1
+            queue.append((neighbor, distances[neighbor]))
+            prev[neighbor] = node
+
+if end_node in distances:
+    print(distances[end_node])
+else:
+    print('No path found')
+print('Shortest path:', end_node, prev[end_node], prev[prev[end_node]], ..., prev[0])"
+Implement a function to find the kth largest element in a list of integers using the QuickSelect algorithm.,"Input: [3, 5, 1, 7, 2, 9, 4, 6, 8]
+k = 3
+Output: 7","To solve this problem, we first read the input data and define a function to implement the QuickSelect algorithm. This function uses a partitioning technique to divide the list into two parts: elements smaller than the pivot and elements greater than or equal to the pivot. We recursively call the function on the appropriate sublist until we find the kth largest element. Finally, we return the kth largest element.","def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i+1], arr[high] = arr[high], arr[i+1]
+    return i+1
+
+def quickselect(arr, k):
+    if len(arr) == k:
+        return arr[k-1]
+    low, high = 0, len(arr)-1
+    pivot_index = partition(arr, low, high)
+    if k == pivot_index + 1:
+        return arr[pivot_index]
+    elif k < pivot_index + 1:
+        return quickselect(arr[:pivot_index], k)
+    else:
+        return quickselect(arr[pivot_index+1:], k-pivot_index-1)
+
+arr = list(map(int, input().strip().split()))
+k = int(input())
+print(quickselect(arr, k))"
+"Implement a stack data structure using Python list and perform basic operations like push, pop, and peek.","Input: A list of integers.
+Output: A list of integers with the same elements but in reversed order.","We can solve this problem by using a list to simulate a stack. The push operation appends an element to the end of the list, the pop operation removes and returns the last element of the list, and the peek operation returns the last element of the list without removing it.","```python
+def push(stack, item):
+    stack.append(item)
+
+def pop(stack):
+    if stack:
+        return stack.pop()
+    else:
+        raise IndexError('The stack is empty')
+
+def peek(stack):
+    if stack:
+        return stack[-1]
+    else:
+        raise IndexError('The stack is empty')
+```"
+Implement a MinHeap data structure and use it to find the kth smallest element in an unsorted array of integers.,"Input: [17, 24, 9, 16, 131, 64, 31, 18, 12, 42], k = 4; Output: 12","A MinHeap is a complete binary tree where each parent node is smaller than its children. To find the kth smallest element in an unsorted array, we can convert the array into a MinHeap and then remove the smallest elements until we have k elements left. The smallest element remaining in the heap is the kth smallest element in the original array.","import heapq
+
+def kth_smallest(arr, k):
+    heap = arr[:k]
+    heapq.heapify(heap)
+    for num in arr[k:]:
+        if len(heap) > k:
+            if num < heap[0]:
+                heapq.heappop(heap)
+                heapq.heappush(heap, num)
+    return heap[0]"
+"Given a set of integers, find the smallest pair of numbers that have a difference of exactly k.","Input: {1, 5, 10, 15, 20}
+k = 3
+Output: (10, 7) (since 10 - 7 = 3 and 7 is not in the set, we can add 6 to the set and find the pair (10, 4))","We can solve this problem by iterating through the set and for each number, we check if the difference between the number and the remaining numbers in the set is equal to k. If we find such a pair, we return it. If not, we add the remaining numbers to a new set and continue the process.","```python
+
+numbers = set(map(int, input().split()))
+k = int(input())
+
+new_numbers = numbers.copy()
+for number in numbers:
+    for diff in range(1, k + 1):
+        if number + diff in new_numbers and number - diff in new_numbers:
+            print(number, number + diff)
+            break
+    else:
+        new_numbers.add(number - k)
+        new_numbers.add(number + k)
+
+if len(new_numbers) > 0:
+    print('No such pair exists')
+```"
+"Implement a queue data structure using a list and perform the enqueue, dequeue, and check_if_empty operations.","Input: enqueue(1), enqueue(2), dequeue(), enqueue(3), check_if_empty()
+Output: 1, 2, None, 3","A queue is a collection of elements ordered for processing. The enqueue operation adds an element to the back of the queue, the dequeue operation removes an element from the front of the queue, and the check_if_empty operation checks if the queue is empty.","```python
+class Queue:
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, item):
+        self.queue.append(item)
+    def dequeue(self):
+        if not self.queue:
+            return None
+        return self.queue.pop(0)
+    def check_if_empty(self):
+        return len(self.queue) == 0
+```"
+"Given a binary tree, find the maximum sum of a path from any node to any other node in the tree. The tree has positive integers as data in its nodes.","Input: [1, 2, 3, 4, None, 5, 6]
+Output: 11","We can solve this problem by performing a Depth-First Search (DFS) on the tree. For each node, we calculate the maximum sum of a path from the node to any other node by considering the node's value, the maximum sum of a path from the left subtree, and the maximum sum of a path from the right subtree. We store the maximum sum found so far.","from typing import Optional
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def maxPathSum(root: Optional[TreeNode]) -> int:
+    max_sum, current_sum = float('-inf'), root.val
+    if root is None:
+        return 0
+    if not root.left and not root.right:
+        return root.val
+    left_sum = max(0, maxPathSum(root.left))
+    right_sum = max(0, maxPathSum(root.right))
+    current_sum = max(left_sum, right_sum) + root.val
+    max_sum = max(max_sum, current_sum, left_sum + right_sum)
+    return max_sum"
+Write a program to find the second largest number in a list of integers. The list can contain duplicate values.,"Input: [1, 2, 3, 2, 1, 3]; Output: 3","To find the second largest number, we first sort the list in descending order. Then, we return the second element of the sorted list.","```python
+arr = [1, 2, 3, 2, 1, 3]
+sorted_arr = sorted(arr, reverse=True)
+if len(arr) < 2:
+    print('List is empty or contains only one element')
+else:
+    print(sorted_arr[1])```"
+Implement a Queue data structure using a list.,"Input: enqueue(1), enqueue(2), dequeue(), enqueue(3), dequeue(), dequeue(), dequeue()
+Output: 1, 2, 3","A Queue is a collection of elements with a first-in-first-out (FIFO) ordering. In this implementation, we use a list to store the queue elements and two indices to keep track of the front and rear of the queue. The enqueue operation adds an element to the rear of the queue, and the dequeue operation removes an element from the front of the queue.","```python
+class Queue:
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, item):
+        self.queue.append(item)
+    def dequeue(self):
+        if len(self.queue) == 0:
+            raise IndexError('The queue is empty')
+        return self.queue.pop(0)
+
+q = Queue()
+q.enqueue(1)
+q.enqueue(2)
+print(q.dequeue())
+q.enqueue(3)
+print(q.dequeue())
+print(q.dequeue())
+print(q.dequeue())
+```"
+Implement a set data structure to find the intersection of two lists.,"Input: [1, 2, 3, 4, 5], [3, 4, 5, 6, 7]; Output: [3, 4, 5]","We can use a set to store the elements of the first list and then check if each element of the second list is in the set. If it is, we add it to the result set.","def intersection(lst1, lst2):
+    set1 = set(lst1)
+    return set(x for x in lst2 if x in set1)"
+Implement a min-heap data structure and find the kth smallest element in an unsorted array.,"Input: [17, 4, 18, 2, 3, 19]; k = 3; Output: 2","We can use a min-heap to store the k smallest elements found so far. Initially, we insert the first k elements of the array into the heap. Then, for each subsequent element, we remove the smallest element from the heap and insert the new element if its value is smaller than the smallest element in the heap. The kth smallest element is the smallest element in the heap after processing the entire array.","```python
+import heapq
+
+k = int(input())
+arr = list(map(int, input().split()))
+heap = []
+
+for i in range(k):
+    heapq.heappush(heap, arr[i])
+
+for i in range(k, len(arr)):
+    heapq.heappop(heap)
+    heapq.heappush(heap, arr[i])
+    if len(heap) == k:
+        smallest = heap[0]
+print(smallest)```"
+"Given a set of integers, find the number of unique subsets with a sum equal to a given target.","Input: [1, 2, 3, 4]; target = 5
+Output: 3 (subsets: {1, 2, 2}, {1, 3, 1}, {2, 2, 1})","We use a recursive backtracking algorithm to generate all subsets of the given set and check if their sum equals the target. We use a set to store the current subset and a dictionary to store the number of subsets with each sum. If we find a subset with the target sum, we return the count from the dictionary.","```python
+
+from collections import defaultdict
+
+def subset_sum(arr, target):
+    def backtrack(i, curr_sum, curr_set):
+        if curr_sum > target:
+            return
+        if curr_sum == target:
+            d[curr_sum].add(tuple(sorted(curr_set)))
+            return
+        for j in range(i, len(arr)):
+            backtrack(j + 1, curr_sum + arr[j], curr_set.union({arr[j]}))
+    d = defaultdict(int)
+    backtrack(0, 0, set())
+    return d[target]
+
+# Test
+arr = [1, 2, 3, 4]
+target = 5
+print(subset_sum(arr, target))```"
+Implement a function to find the kth largest element in a list.,"Input: [3, 1, 2, 5, 6, 4]
+k = 3
+Output: 4","1. Sort the list in descending order.
+2. Return the kth element from the sorted list.","def kth_largest(nums, k):
+    nums.sort(reverse=True)
+    return nums[k-1]
+
+nums = [3, 1, 2, 5, 6, 4]
+k = 3
+print(kth_largest(nums, k))"
+"Given an array of integers, find the maximum sum of a contiguous subarray within the array.","Input: [1, -2, 3, 10, -4, 7, 2]; Output: 18","To find the maximum sum of a contiguous subarray, we can use the Kadane's algorithm. The algorithm maintains the maximum sum ending at the current position and the maximum sum found so far.","```python
+def max_subarray_sum(arr):
+    max_so_far = max_ending_here = arr[0]
+    for i in range(1, len(arr)):
+        max_ending_here = max(arr[i], max_ending_here + arr[i])
+        max_so_far = max(max_so_far, max_ending_here)
+    return max_so_far
+```"
+"Implement a binary tree using the standard Python list data structure. The tree should have the following methods: insert, delete, and find_min. The insert method should add a new node to the tree, the delete method should remove a node from the tree, and the find_min method should return the minimum value in the tree.","Input: []
+Output: []
+Input: [1]
+Output: [1]
+Input: [1, 2]
+Output: [1]
+Input: [1, 2, 3]
+Output: [1]
+Input: [1, 2, 3, 4]
+Output: [1]
+Input: [1, 2, 3, 4, None, 5, None, None, 6]
+Output: [1]
+Input: [1, 2, 3, 4, None, 5, None, None, 6]
+Output: 4","The binary tree is a data structure that organizes data in a hierarchical tree-like structure. Each node in the tree has at most two children, called the left child and the right child. The tree can be represented as a list where the root node is at index 0, the left child of the root node is at index 2*i+1, and the right child of the root node is at index 2*i+2. The insert method adds a new node to the tree by finding the appropriate position for the new node and shifting the existing nodes to make room for the new node. The delete method removes a node from the tree by finding the node to be deleted and rearranging the tree to fill the gap left by the deleted node. The find_min method finds the minimum value in the tree by traversing the tree from the root node to the leftmost leaf node.","```python
+class Node:
+    def __init__(self, value=None):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def binary_tree():
+    def insert(tree, value):
+        if tree is None:
+            tree = Node(value)
+        else:
+            if value < tree.value:
+                tree.left = insert(tree.left, value)
+            else:
+                tree.right = insert(tree.right, value)
+        return tree
+    def delete(tree, value):
+        if tree is None:
+            return None
+        if value < tree.value:
+            tree.left = delete(tree.left, value)
+        elif value > tree.value:
+            tree.right = delete(tree.right, value)
+        else:
+            if tree.left is None and tree.right is None:
+                return None
+            elif tree.left is None:
+                return tree.right
+            elif tree.right is None:
+                return tree.left
+            else:
+                min_value = find_min(tree.right)
+                tree.value = min_value
+                tree.right = delete(tree.right, min_value)
+        return tree
+    def find_min(tree):
+        if tree is None:
+            return None
+        if tree.left is None:
+            return tree.value
+        return find_min(tree.left)
+# Example usage:
+bt = []
+# ... (insert nodes)
+print(find_min(bt))```"
+Implement a Min Heap using a list to sort a list of integers.,"Input: [12, 11, 13, 5, 6, 7]
+Output: [5, 6, 7, 11, 12, 13]","A Min Heap is a complete binary tree where each parent node is smaller than or equal to its children. It can be implemented using a list by maintaining the heap property: for each node i, the value of its children (if they exist) should be greater than or equal to i.","```python
+def min_heapify(arr, n, i):
+    left = 2 * i + 1
+    right = 2 * i + 2
+    smallest = i
+    if left < n and arr[left] < arr[smallest]:
+        smallest = left
+    if right < n and arr[right] < arr[smallest]:
+        smallest = right
+    if smallest != i:
+        arr[i], arr[smallest] = arr[smallest], arr[i]
+        min_heapify(arr, n, smallest)
+
+def build_min_heap(arr):
+    n = len(arr)
+    for i in range(n // 2 - 1, -1, -1):
+        min_heapify(arr, n, i)
+
+def heap_sort(arr):
+    build_min_heap(arr)
+    for i in range(len(arr) - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        min_heapify(arr, i, 0)
+    return arr
+
+# Example usage:
+arr = [12, 11, 13, 5, 6, 7]
+print(heap_sort(arr))```"
+Implement a Queue data structure using Python's built-in list data structure.,"Input: enqueue(1), enqueue(2), dequeue(), enqueue(3), dequeue(), dequeue(); Output: [1, 2, 3]","A Queue is a collection of elements with a first-in-first-out (FIFO) ordering. In this task, we will implement a Queue using a list and two methods: enqueue() to add an element to the back of the queue and dequeue() to remove an element from the front of the queue.","class Queue:
+    def __init__(self):
+        self.items = []
+    def enqueue(self, item):
+        self.items.append(item)
+    def dequeue(self):
+        return self.items.pop(0)"
+Write a function to find the maximum sum of a subarray with a given sum.,"Input: {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: -1, 7: -2, 8: -3, 9: 4}; Output: [4, 5]","To solve this problem, we first create a function `subarray_sum(dct, target)` to find the maximum sum of a subarray with a given sum. The function uses a sliding window approach, where it iterates through the dictionary and keeps track of the current sum and the sum of the subarray that has the maximum sum with the given target. If the current sum exceeds the target, it subtracts the first element of the subarray and moves the window to the right.","```python
+def subarray_sum(dct, target):
+    max_sum = 0
+    current_sum = 0
+    start = 0
+    for end in range(len(dct)):
+        current_sum += dct[end]
+        while current_sum > target:
+            current_sum -= dct[start]
+            start += 1
+        if current_sum == target:
+            max_sum = max(max_sum, current_sum)
+        if current_sum > max_sum:
+            max_sum = current_sum
+    subarray = []
+    start = 0
+    for end in range(len(dct)):
+        if dct[end] == target and max_sum == target:
+            subarray.append(dct.keys()[start])
+            subarray.append(dct.keys()[end])
+            break
+        if dct[end] + current_sum - dct[start] == target and max_sum == target + dct[end]:
+            subarray.append(dct.keys()[start])
+            subarray.append(dct.keys()[end])
+            start += 1
+    return subarray
+
+def main():
+    dct = {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: -1, 7: -2, 8: -3, 9: 4}
+    target = 7
+    print(subarray_sum(dct, target))
+
+if __name__ == '__main__':
+    main()```"
+Implement an array-based solution to find the second largest number in a list.,"Input: [3, 5, 2, 7, 1]; Output: 5","The problem requires finding the second largest number in a given list. We can use an array-based solution where we initialize two variables, max and second_max, to store the largest and second largest numbers, respectively. We then iterate through the list and update max and second_max as needed.","```python
+def second_largest(nums):
+    max_num = max(nums)
+    second_max = float('-inf') # initialize second_max to a small negative number
+    for num in nums:
+        if num > max_num:
+            second_max = max_num
+            max_num = num
+        elif num > second_max and num != max_num:
+            second_max = num
+    if second_max == float('-inf'):
+        print('There is no second largest number')
+    else:
+        print(second_max)
+
+# Test cases
+print(second_largest([3, 5, 2, 7, 1])) # Output: 5
+print(second_largest([1, 2, 3, 4, 5])) # Output: 4
+print(second_largest([10, 20, 20, 30, 40])) # Output: 20
+```"
+"Implement a priority queue using a binary heap that can perform insertion, deletion, and finding the minimum element in O(log n) time.","Input: 
+[3, 5, 1, 7, 9, 2, 6, 8, 4]
+Output: [1, 2, 3, 4, 5, 6, 7, 8, 9]","To solve this problem, we can use a binary heap data structure. A binary heap is a complete binary tree where each node is greater than or equal to its children (max heap) or less than or equal to its children (min heap). We can implement a min heap by maintaining the invariant that the parent node is less than or equal to its children. We can use the built-in `heapq` module to perform insertion, deletion, and finding the minimum element in O(log n) time.","```python
+import heapq
+
+def min_heap():
+    return []
+
+def insert(heap, value):
+    heapq.heappush(heap, value)
+
+def delete_min(heap):
+    return heapq.heappop(heap)
+
+def find_min(heap):
+    return heap[0]
+```"
+Implement a heap data structure to find the kth largest element in an unsorted array.,"Input: [10, 20, 30, 40, 50, 60, 70, 80, 90], k = 4; Output: 50","A heap is a complete binary tree where each parent node is greater than or equal to its child nodes. To find the kth largest element in an unsorted array, we can build a max-heap and extract the k largest elements from the heap.","import heapq
+
+def kth_largest(arr, k):
+    heap = arr[:k]
+    heapq.heapify(heap)
+    for e in arr[k:]:
+        if e > heap[0]:
+            heapq.heappop(heap)
+            heapq.heappush(heap, e)
+    return heap[0]"
+"Implement a queue using a list and perform the following operations: enqueue, dequeue, and print the queue.","Input: enqueue 1, enqueue 2, dequeue, enqueue 3, print
+Output: 1 2 3","1. Initialize an empty list to represent the queue. 
+2. For the enqueue operation, append the given element to the end of the list. 
+3. For the dequeue operation, remove the first element from the list. 
+4. For the print operation, print the elements in the list separated by a space.","```python
+queue = []
+def enqueue(x):
+    queue.append(x)
+
+def dequeue():
+    if len(queue) == 0:
+        print('Queue is empty')
+        return
+    return queue.pop(0)
+
+def print_queue():
+    print(' '.join(str(x) for x in queue))
+
+# Example usage:
+for operation in input().split():
+    if operation == 'enqueue':
+        num = int(input())
+        enqueue(num)
+    elif operation == 'dequeue':
+        dequeue()
+    elif operation == 'print':
+        print_queue()
+    else:
+        print('Invalid operation')```"
+"Implement a Set data structure using a dictionary in Python. The Set data structure should support the following operations: add, remove, and check if an element is in the Set.","Input: set = {
+    'apple': True,
+    'banana': True,
+    'orange': True
+}
+Output: set.add('grape') -> {'apple': True, 'banana': True, 'orange': True, 'grape': True}
+set.remove('banana') -> {'apple': True, 'orange': True, 'grape': True}
+'grape' in set -> True","We can implement a Set data structure using a dictionary in Python. The keys of the dictionary represent the elements of the Set, and the values are set to True to indicate that the elements are present in the Set. The add operation adds a new element to the Set by adding a new key-value pair to the dictionary. The remove operation removes an element from the Set by deleting the corresponding key from the dictionary. The check operation checks if an element is in the Set by checking if the corresponding key exists in the dictionary.","class Set:
+    def __init__(self):
+        self.set = {
+        }
+    def add(self, element):
+        if element not in self.set:
+            self.set[element] = True
+    def remove(self, element):
+        if element in self.set:
+            del self.set[element]
+    def __contains__(self, element):
+        return element in self.set
+
+# Test the Set class
+set = Set()
+set.add('apple')
+set.add('banana')
+set.add('orange')
+print(set)
+set.remove('banana')
+print(set)
+print('grape' in set)"
+Implement a priority queue using a binary heap data structure to find the kth smallest element in a list of n integers.,"Input: n=10, k=3, numbers=[1, 5, 12, 2, 11, 5, 1, 13, 8, 6]; Output: 2","A binary heap is a complete binary tree where each parent node is greater than or equal to its children. We can use a binary heap to implement a priority queue, where the smallest element is always at the root. To find the kth smallest element, we can build a binary heap from the list, extract the k smallest elements from the heap, and return the kth smallest element.","```python
+import heapq
+def kth_smallest(numbers, k):
+    heap = numbers[:]
+    heapq.heapify(heap)
+    for i in range(len(heap) - k):
+        heapq.heappop(heap)
+    return heapq.heappop(heap)
+```"
+Implement a Queue data structure using Python's built-in list.,"Input: Enqueue 1, 2, 3
+Dequeue
+Enqueue 4
+Dequeue
+Dequeue
+Output: [1, 2, 3, 4]","A Queue is a collection of entities which are maintained in a particular order (FIFO - First In First Out). In Python, we can implement a Queue using a list and two pointers - one for the front of the queue and another for the rear of the queue.","```python
+class Queue: 
+    def __init__(self): 
+        self.queue = []
+
+    def enqueue(self, item): 
+        self.queue.append(item)
+
+    def dequeue(self): 
+        if len(self.queue) == 0: 
+            return None
+        return self.queue.pop(0)
+
+    def size(self): 
+        return len(self.queue)
+
+# Test the Queue
+q = Queue()
+q.enqueue(1)
+q.enqueue(2)
+q.enqueue(3)
+print(q.size())
+print(q.dequeue())
+print(q.size())
+q.enqueue(4)
+print(q.size())
+print(q.dequeue())
+print(q.dequeue())
+print(q.dequeue())
+print(q.size())
+```"
+Write a program to implement a dictionary that stores the frequency of words in a given text.,"Input: 'I love Python, Python is awesome'; Output: {'I': 1, 'love': 1, 'Python': 2, 'is': 1, 'awesome': 1}","To find the frequency of words in a given text, we can use a dictionary to store the words as keys and their frequencies as values. We can iterate through the text, split it into words, and update the dictionary accordingly.","```python
+text = input().lower().split()
+word_freq = {} 
+for word in text:
+    if word in word_freq:
+        word_freq[word] += 1
+    else:
+        word_freq[word] = 1
+print(word_freq)```"
+Write a function to reverse a stack using another stack.,"Input: Stack([1, 2, 3, 4]); Output: Stack([4, 3, 2, 1])","To solve this problem, we create a new stack and pop elements from the original stack one by one. Each popped element is pushed onto the new stack in reverse order.","def reverse_stack(stack):
+	new_stack = []
+	while not stack.is_empty():
+		new_stack.append(stack.pop())
+	return new_stack"
+Implement a Queue data structure using Python's built-in list.,"Input: enqueue(1), enqueue(2), dequeue(), enqueue(3), dequeue(), dequeue()
+Output: [1, 2, 3]","The problem can be solved by using a list to simulate a queue. The algorithm should implement the enqueue and dequeue operations, ensuring that the dequeue operation removes the first element added to the queue.","```python
+class Queue:
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, item):
+        self.queue.append(item)
+    def dequeue(self):
+        if not self.queue:
+            raise IndexError('The queue is empty')
+        return self.queue.pop(0)
+
+queue = Queue()
+queue.enqueue(1)
+queue.enqueue(2)
+print(queue.dequeue())
+queue.enqueue(3)
+print(queue.dequeue())
+print(queue.dequeue())```"
+"Implement a Queue data structure using Python's built-in list and enqueue, dequeue, and is_empty operations.","Input: enqueue(1), enqueue(2), dequeue(), enqueue(3), is_empty(); Output: 2, False","To solve this problem, we create a class called Queue with three methods: enqueue, dequeue, and is_empty. The enqueue method adds an element to the end of the list, the dequeue method removes an element from the front of the list, and the is_empty method checks if the list is empty.","class Queue:
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, item):
+        self.queue.append(item)
+    def dequeue(self):
+        if len(self.queue) == 0:
+            raise IndexError('The queue is empty')
+        return self.queue.pop(0)
+    def is_empty(self):
+        return len(self.queue) == 0"
+"Given a list of integers, find the maximum sum of a contiguous subarray with at most k negative numbers.","Input: [4, -2, 3, -1, 6, -4, 1]
+k = 2
+Output: 7 (4, -2, 3, -1, 6)","The problem can be solved by iterating through the list and keeping track of the maximum sum of a contiguous subarray with at most k negative numbers. For each element, we can either include it in the current subarray or start a new subarray. If the number of negative numbers in the current subarray exceeds k, we discard the subarray and start a new one.","```python
+def max_sum_subarray(nums: List[int], k: int) -> int:
+    max_sum, max_so_far, neg_count = 0, 0, 0
+    for num in nums:
+        max_sum = max(num, max_sum + num)
+        if num < 0:
+            neg_count += 1
+            max_sum = max_sum > max_so_far and max_sum or 0
+            max_so_far = max(max_so_far, max_sum)
+    return max_so_far
+```"
+Implement a binary tree using a list and write a function to find the maximum sum of a path from any node to any leaf in the tree.,Input: A list representing a binary tree and the root node; Output: The maximum sum of a path from any node to any leaf in the tree.,"We traverse the tree using a depth-first search (DFS) approach. At each node, we calculate the sum of the node and the maximum sum of its subtrees (left and right). We keep track of the maximum sum found so far. The maximum sum of a path from any node to any leaf is the maximum of the sum of the node and the maximum sum of its subtrees.","```python
+class Node: 
+    def __init__(self, data): 
+        self.data = data
+        self.left = None
+        self.right = None
+
+class Tree: 
+    def __init__(self, arr, index): 
+        self.root = self.build_tree(arr, index)
+    
+    def build_tree(self, arr, index): 
+        if index < len(arr): 
+            node = Node(arr[index])
+            index += 1
+            node.left = self.build_tree(arr, index)
+            index += 1
+            node.right = self.build_tree(arr, index)
+        else:
+            node = None
+        return node
+    
+    def max_path_sum(self, node): 
+        if not node: 
+            return 0
+        
+        left_sum = self.max_path_sum(node.left)
+        right_sum = self.max_path_sum(node.right)
+        
+        node_sum = node.data + min(left_sum, right_sum)
+        
+        return max(node_sum, max(left_sum, right_sum))
+    
+def __starting_point(): 
+    arr = [1, 2, 3, 4, None, 5, 6, None, None, 7, None, None, None, 8]
+    t = Tree(arr, 0)
+    print(t.max_path_sum(t.root))
+__starting_point()
+```"
+Implement a dynamic array data structure that can resize itself as needed to store a sequence of integers.,"Input: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]","A dynamic array is a data structure that can resize itself as needed to store a sequence of integers. It uses an array to store the elements and a separate variable to keep track of the current size of the array. When the array is full, we create a new array with twice the capacity and copy the elements from the old array to the new array. When the array is less than half full, we can shrink it to save memory.","Here is a Python solution that uses a dynamic array data structure.
+
+```
+class DynamicArray:
+    def __init__(self):
+        self.arr = []
+        self.size = 0
+        self.capacity = 0
+    def __len__(self):
+        return self.size
+    def append(self, value):
+        if self.size == self.capacity:
+            self.resize(2 * self.capacity)
+        self.arr[self.size] = value
+        self.size += 1
+    def resize(self, new_capacity):
+        new_arr = [None] * new_capacity
+        for i in range(self.size):
+            new_arr[i] = self.arr[i]
+        self.arr = new_arr
+        self.capacity = new_capacity
+    def __getitem__(self, index):
+        if 0 <= index < self.size:
+            return self.arr[index]
+        raise IndexError('Index out of range')
+    def __setitem__(self, index, value):
+        if 0 <= index < self.size:
+            self.arr[index] = value
+        else:
+            raise IndexError('Index out of range')
+
+def __starting_point():
+    arr = DynamicArray()
+    for i in range(1, 11):
+        arr.append(i)
+    print(arr)
+
+__starting_point()
+```"
+"Given a list of integers, find the maximum sum of a contiguous subarray with an odd number of elements.","Input: [1, 2, 2, 5, 2, 3, 7]; Output: 10","We iterate through the list and keep track of the maximum sum of a contiguous subarray with an odd number of elements. If the current subarray has an even number of elements, we discard it and move to the next element. If the current subarray has an odd number of elements, we add it to the maximum sum.","def max_sum_odd_subarray(arr):
+    n = len(arr)
+    max_sum = -float('inf')
+    for i in range(n):
+        current_sum = 0
+        for j in range(i, n):
+            current_sum += arr[j]
+            if current_sum % 2 == 1 and current_sum > max_sum:
+                max_sum = current_sum
+    return max_sum"
+"Implement a Min Heap data structure using a list and perform the following operations: insert, delete, and find the minimum.","Input: Insert 5, 3, 8, 1, 6; Output: [1, 3, 5, 6, 8]
+Input: Delete minimum; Output: 1
+Input: Insert 7; Output: [1, 3, 5, 6, 8, 7]","To solve this problem, we use a list to represent the heap. The parent of a node at index i is at index (i - 1) // 2. The left child of a node at index i is at index 2*i + 1, and the right child is at index 2*i + 2. We maintain the heap property: for each node i, its value is less than or equal to the values of its children. We implement the insert, delete, and find_min operations accordingly.","class MinHeap:
+    def __init__(self):
+        self.heap = []
+
+    def insert(self, value):
+        self.heap.append(value)
+        self._bubble_up(len(self.heap) - 1)
+
+    def delete_min(self):
+        if not self.heap:
+            return None
+        min_value = self.heap[0]
+        self.heap[0] = self.heap[-1]
+        self.heap.pop()
+        self._bubble_down(0)
+        return min_value
+
+    def find_min(self):
+        if not self.heap:
+            return None
+        return self.heap[0]
+
+    def _bubble_up(self, index):
+        parent_index = (index - 1) // 2
+        if index > 0 and self.heap[parent_index] > self.heap[index]:
+            self.heap[parent_index], self.heap[index] = self.heap[index], self.heap[parent_index]
+            self._bubble_up(parent_index)
+
+    def _bubble_down(self, index):
+        left_child_index = 2 * index + 1
+        right_child_index = 2 * index + 2
+        min_index = index
+        if left_child_index < len(self.heap) and self.heap[left_child_index] < self.heap[min_index]:
+            min_index = left_child_index
+        if right_child_index < len(self.heap) and self.heap[right_child_index] < self.heap[min_index]:
+            min_index = right_child_index
+        if min_index != index:
+            self.heap[index], self.heap[min_index] = self.heap[min_index], self.heap[index]
+            self._bubble_down(min_index)
+
+# Example usage:
+heap = MinHeap()
+heap.insert(5)
+heap.insert(3)
+heap.insert(8)
+heap.insert(1)
+heap.insert(6)
+print(heap.heap)
+heap.delete_min()
+heap.insert(7)
+print(heap.heap)"
+"Implement a Stack Data Structure using Python's built-in List. Perform the following operations: push, pop, peek, and is_empty.","Input: push 5
+Output: []
+Input: push 10
+Output: [10]
+Input: push 15
+Output: [10, 15]
+Input: pop
+Output: 15
+Input: peek
+Output: 10
+Input: is_empty
+Output: False",A Stack is a Last-In-First-Out (LIFO) data structure. We can simulate a stack using a list where we add and remove elements from the end of the list.,"```python
+class Stack:
+    def __init__(self):
+        self.items = []
+    def push(self, item):
+        self.items.append(item)
+    def pop(self):
+        if not self.is_empty():
+            return self.items.pop()
+        else:
+            raise IndexError('The stack is empty')
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+        else:
+            raise IndexError('The stack is empty')
+    def is_empty(self):
+        return len(self.items) == 0
+
+# Test
+stack = Stack()
+stack.push(5)
+print(stack)
+stack.push(10)
+print(stack)
+stack.push(15)
+print(stack)
+print(stack.pop())
+print(stack.peek())
+print(stack.is_empty())
+```"
+"Given a graph represented as an adjacency list, find the number of connected components in the graph.","Input: adjacency_list = [[0, 1, 2], [0, 3, 4], [2, 3, 5], [1, 4, 5], []]; Output: 3","To solve this problem, we use Depth-First Search (DFS) to explore the graph. We start from an unvisited node and explore its adjacent nodes recursively. If we encounter a node that is already visited, we skip it. After exploring all the nodes in a connected component, we mark all the nodes in that component as visited and move to the next connected component. The number of connected components is the number of times we perform DFS.","from collections import defaultdict
+
+adjacency_list = [[0, 1, 2], [0, 3, 4], [2, 3, 5], [1, 4, 5], []]
+
+visited = set()
+components = 0
+
+for node in range(len(adjacency_list)):
+    if node not in visited:
+        dfs(node, adjacency_list, visited)
+        components += 1
+
+def dfs(node, adjacency_list, visited):
+    visited.add(node)
+    for neighbor in adjacency_list[node]:
+        if neighbor not in visited:
+            dfs(neighbor, adjacency_list, visited)"
+"Implement a graph data structure to represent a road network. Each road has a starting city, an ending city, and a travel time between the two cities. The task is to find the shortest path between two cities.","Input: [('A', 'B', 1), ('A', 'C', 3), ('B', 'C', 2), ('B', 'D', 4), ('C', 'D', 1)]","The reasoning is to use an adjacency list to represent the graph. Each city is a node in the graph, and each road is an edge connecting two nodes with a travel time. The shortest path between two cities is found using Dijkstra's algorithm.","```python
+import heapq
+
+class Graph:
+    def __init__(self):
+        self.nodes = {} 
+    def add_edge(self, src, dest, weight):
+        if src not in self.nodes:
+            self.nodes[src] = []
+        self.nodes[src].append((dest, weight))
+    def shortest_path(self, src, dest):
+        q = [(0, src)]
+        visited = set()
+        while q:
+            _, current = heapq.heappop(q)
+            if current == dest:
+                return current
+            if current not in visited:
+                visited.add(current)
+                for neighbor, weight in self.nodes[current]:
+                    if neighbor not in visited:
+                        heapq.heappush(q, (weight + current, neighbor))
+        return -1
+
+graph = Graph()
+for edge in input().splitlines():
+    src, dest, weight = edge.split()
+    graph.add_edge(src, dest, int(weight))
+
+start, end = input().split()
+print(graph.shortest_path(start, end))```"
+Implement a graph data structure using adjacency list representation to represent a social network where each node represents a person and each edge represents a friendship.,"Input: list of lists representing the social network:
+[[1, 2, 3], [0, 2], [0, 1, 4], [1, 3], [2, 4]]
+Output: A graph data structure with the following nodes and edges:
+Nodes: [0, 1, 2, 3, 4]
+Edges: (0, 1), (0, 2), (0, 4), (1, 2), (1, 3), (2, 4)",We create a class to represent the graph and a method to add nodes and edges to the graph. We use a dictionary to store the nodes and their neighbors. Each key in the dictionary represents a node and its value is a list of the node's neighbors.,"```python
+class Graph: 
+    def __init__(self): 
+        self.graph = {}
+
+    def add_node(self, node): 
+        if node not in self.graph: 
+            self.graph[node] = []
+
+    def add_edge(self, node1, node2): 
+        if node1 in self.graph and node2 in self.graph:
+            self.graph[node1].append(node2)
+            self.graph[node2].append(node1)
+
+    def get_nodes(self): 
+        return list(self.graph.keys())
+
+    def get_neighbors(self, node): 
+        if node in self.graph:
+            return self.graph[node]
+        else:
+            return []
+
+    def __str__(self): 
+        nodes = self.get_nodes()
+        edges = []
+        for node in nodes:
+            neighbors = self.get_neighbors(node)
+            for neighbor in neighbors:
+                if (node, neighbor) not in edges:
+                    edges.append((node, neighbor))
+        return f'Nodes: {nodes}
+Edges: {edges}' 
+
+graph = Graph()
+graph.add_node(0)
+graph.add_node(1)
+graph.add_node(2)
+graph.add_node(3)
+graph.add_node(4)
+
+graph.add_edge(0, 1)
+graph.add_edge(0, 2)
+graph.add_edge(0, 4)
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(2, 4)
+
+print(graph)
+```"

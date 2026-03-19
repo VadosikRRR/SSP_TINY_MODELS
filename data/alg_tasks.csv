@@ -1,0 +1,1222 @@
+question,example,reasoning,solution
+Write a function to count the number of occurrences of a specific value in a list.,"Input: [1, 2, 2, 3, 4, 2, 5, 2]; Output: 3","To count the number of occurrences of a specific value in a list, we iterate through the list and keep a count of the number of times the target value appears.",Use the built-in `count` method of the list object. Here's the Python code:
+Implement a pointer-based algorithm to find the second largest number in a list.,"Input: [1, 2, 3, 4, 5]; Output: 4","We use two pointers, one to traverse the list and find the maximum number, and another to find the second maximum number. If the second maximum number is less than the current number, we update the second maximum number. If the second maximum number is equal to the current number and the maximum number is not yet found, we update the maximum number and the second maximum number.","def second_largest(nums):
+    max_num, second_max_num = float('-inf'), float('-inf')
+    for num in nums:
+        if num > max_num:
+            second_max_num, max_num = max_num, num
+        elif num > second_max_num and num != max_num:
+            second_max_num = num
+    return second_max_num"
+Write a function to count the number of unique pairs in a list of tuples where each tuple contains two integers.,"Input: [(1, 2), (2, 1), (3, 4), (4, 3), (2, 2)]; Output: 2","We can solve this problem by using a set to store the unique pairs. We iterate through the list of tuples and for each tuple, we convert it to a string and add it to the set. Since sets do not allow duplicate elements, the number of elements in the set after iteration will be the number of unique pairs.","def count_unique_pairs(lst):
+    pairs = set()
+    for pair in lst:
+        pair_str = str(pair)
+        pairs.add(pair_str)
+    return len(pairs)"
+Count the number of unique elements in a list that appear more than n times.,"Input: [1, 2, 2, 3, 4, 4, 4, 5, 5, 5]; n = 2
+Output: 3","1. Initialize an empty dictionary to store the count of each element.
+2. Iterate through the list and update the count of each element in the dictionary.
+3. Iterate through the dictionary and find the elements that appear more than n times.
+4. Return the count of these elements.","def count_more_than_n(lst, n):
+    count = {} 
+    for i in lst:
+        if i in count:
+            count[i] += 1
+        else:
+            count[i] = 1
+    res = []
+    for k, v in count.items():
+        if v > n:
+            res.append(k)
+    return len(res)"
+Write a recursive function to find the Fibonacci number at the nth position.,Input: 7; Output: 13,"The Fibonacci sequence is a series of numbers in which each number is the sum of the two preceding ones, usually starting with 0 and 1. To find the nth Fibonacci number, we can use a recursive function that calls itself with n-1 and n-2 until it reaches the base cases of 0 and 1.","```python
+def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+
+# Test the function
+print(fibonacci(7)) # Output: 13```"
+Implement Depth-First Search (DFS) to find a path from a source node to a target node in a directed graph.,"Input: adjacency_list = [(), (2), (1, 3), (0, 4), (2)]; source = 1; target = 4; Output: True","To find a path from a source node to a target node in a directed graph, we use Depth-First Search (DFS). We start from the source node and explore as far as possible along each branch before backtracking. If we reach the target node during this exploration, we return True. If we exhaust all branches without reaching the target node, we return False.","```python
+import collections
+
+class Graph: 
+    def __init__(self, vertices): 
+        self.graph = collections.defaultdict(list)
+        self.V = vertices
+
+    def add_edge(self, u, v): 
+        self.graph[u].append(v)
+
+    def is_reachable(self, src, dest): 
+        visited = [False] * self.V
+        stack = [src]
+        visited[src] = True
+        while stack: 
+            s = stack.pop()
+            if s == dest: 
+                return True
+            for i in self.graph[s]: 
+                if not visited[i]: 
+                    visited[i] = True
+                    stack.append(i)
+        return False
+
+# Test the function
+graph = Graph(6)
+graph.add_edge(1, 2)
+graph.add_edge(2, 3)
+graph.add_edge(1, 4)
+graph.add_edge(4, 5)
+graph.add_edge(5, 6)
+graph.add_edge(4, 0)
+print(graph.is_reachable(1, 4)) # True
+print(graph.is_reachable(1, 6)) # True
+print(graph.is_reachable(1, 7)) # False```"
+Implement a pointer-based algorithm to find the second largest number in a list.,"Input: [3, 6, 2, 7, 1]; Output: 6","We can solve this problem by iterating through the list and using two pointers, one for the largest number and another for the second largest number. Initially, the second largest number is set to None. As we iterate through the list, we update the largest number and the second largest number if the current number is greater than the second largest number and less than the largest number.","def second_largest(nums):
+    if len(nums) < 2:
+        return None
+    max_num = max(nums)
+    max_index = nums.index(max_num)
+    nums[max_index] = -1
+    second_max = None
+    for i in range(len(nums)):
+        if nums[i] != -1 and (second_max is None or nums[i] > second_max):
+            second_max = nums[i]
+    return second_max"
+Write a recursive function to find the Fibonacci number at a given position.,"Input: 8
+Output: 21","The task requires finding the Fibonacci number at a given position using recursion. The Fibonacci sequence is a series of numbers in which each number is the sum of the two preceding ones, usually starting with 0 and 1.","```python
+def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n - 1) + fibonacci(n - 2)
+
+input_num = int(input())
+print(fibonacci(input_num))```"
+"Given a list of integers, sort the list using the Merge Sort algorithm and find the median of the sorted list.","Input: [3, 5, 1, 2, 6, 4]
+Output: 3","First, we divide the list into two halves and sort each half using the Merge Sort algorithm. Then, we find the median of the sorted list by checking if the list has an odd or even number of elements. If the list has an odd number of elements, the median is the middle element. If the list has an even number of elements, the median is the average of the two middle elements.","```python
+import sys
+input = sys.stdin.readline
+
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result += left[i:]
+    result += right[j:]
+    return result
+
+N = int(input())
+arr = list(map(int, input().split()))
+arr = merge_sort(arr)
+if len(arr) % 2 == 1:
+    print(arr[len(arr) // 2])
+else:
+    print((arr[len(arr) // 2 - 1] + arr[len(arr) // 2]) / 2)
+```"
+Implement Breadth-First Search (BFS) algorithm to find the shortest path between two nodes in an undirected graph with weighted edges.,"Input: adjacency list of a graph with 5 nodes and edge weights as follows:
+[([1, 2, 4], []), ([3], [2, 5, 1]), ([], [4]), ([3, 5], []), ([1], [3])]
+Start node: 1
+End node: 4
+Output: The shortest path is [1, 2, 4].","The BFS algorithm explores the graph level by level, starting from the source node. It maintains a queue to keep track of the nodes to be visited next and a visited set to avoid revisiting the same node. The algorithm assigns a distance value to each node, initially setting the distance of the source node to 0 and infinity for all other nodes. At each step, the algorithm dequeues the node with the smallest distance and updates the distances of its unvisited neighbors. The shortest path is found by tracing back the path from the end node to the source node.","Here is a Python solution using the BFS algorithm. The solution uses the built-in collections.deque and collections.defaultdict data structures.
+
+import collections
+
+def bfs(graph, start, end):
+    queue = collections.deque([(start, [start])])
+    visited = set()
+    while queue:
+        node, path = queue.popleft()
+        if node == end:
+            return path
+        visited.add(node)
+        for neighbor, weight in graph[node]:
+            if neighbor not in visited:
+                queue.append((neighbor, path + [neighbor]))
+    return None
+
+    def print_shortest_path(graph, start, end):
+        path = bfs(graph, start, end)
+        if path is None:
+            print('No path found')
+        else:
+            print('Shortest path:', path)
+
+    graph = {
+        0: [(1, 4), (2, 2)],
+        1: [(0, 4), (2, 1), (3, 5)],
+        2: [(0, 2), (1, 1), (3, 1), (4, 3)],
+        3: [(1, 5), (2, 1), (4, 1)],
+        4: [(0, 4), (2, 3), (3, 1)]
+    }
+    print_shortest_path(graph, 1, 4)"
+Implement a pointer-based algorithm to find the longest common substring between two strings.,"Input: 'abcde', 'cbdef'; Output: 'de'","We use two pointers, one for each string, to traverse the strings simultaneously. If the characters at the current positions of both pointers are the same, we move both pointers forward and continue the comparison. If the characters are not the same, we move the pointer of the shorter string forward. We keep track of the longest common substring found so far.","def lcs(s1, s2):
+    m = len(s1)
+    n = len(s2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    longest = ''
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i - 1] == s2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+                if dp[i][j] > len(longest):
+                    longest = s1[i - dp[i][j]:i]
+    return longest"
+Implement a binary search algorithm to find the position of a specific value in a sorted list.,"Input: [1, 3, 5, 7, 9], 5; Output: 2","We compare the middle element of the list with the target value. If they are equal, we return the index. If the target value is less than the middle element, we repeat the process on the left half of the list. If the target value is greater than the middle element, we repeat the process on the right half of the list.","def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+    arr = [1, 3, 5, 7, 9]
+    target = 5
+    print(binary_search(arr, target))"
+Luba wants to find the longest path in a directed graph without negative cycles. The graph is represented as an adjacency list. Find the longest path in the graph.,"Input: [[0, 1, -1], [1, 2, 3], [-1, 3, 0]]
+Output: 3","To find the longest path in the graph, we can use Depth-First Search (DFS) with a time limit. We initialize the time limit to -1 (indicating no path found yet). For each node, we run DFS and update the time limit if we find a longer path. In the example, the longest path is from node 0 to node 2 with a length of 3.","```python
+from collections import defaultdict
+
+def dfs(node, graph, visited, time_limit, current_time):
+    visited[node] = True
+    for neighbor in graph[node]:
+        if not visited[neighbor]:
+            new_time_limit = max(time_limit, current_time + 1)
+            dfs(neighbor, graph, visited, new_time_limit, current_time + 1)
+    time_limit = max(time_limit, current_time)
+
+graph = defaultdict(list)
+visited = [False] * len(graph)
+
+# Add edges to the graph
+# ...
+
+# Run DFS on the graph
+dfs(0, graph, visited, -1, 0)
+print(time_limit)```"
+"Given a one-dimensional array representing a maze, find the shortest path from the top-left corner (start) to the bottom-right corner (end) using a pointer-based algorithm.","Input: [[0, 1, 0], [1, 1, 1], [0, 1, 0]]; Output: [(0, 0), (0, 1), (1, 1), (1, 2), (2, 2)]","1. Initialize the start and end positions, and a list to store the path.
+2. Implement a BFS (Breadth-First Search) algorithm using a pointer to explore the maze from the start position.
+3. At each step, move the pointer to the adjacent unvisited cell with the shortest distance (or 1 if it's the first visit).
+4. When the end position is reached, return the path.","import collections
+
+# @profile
+def shortest_path(maze):
+    start, end = (0, 0), (len(maze) - 1, len(maze[0]) - 1)
+    queue = collections.deque([(start, [start])])
+    visited = set()
+    visited.add(start)
+    while queue:
+        pos, path = queue.popleft()
+        if pos == end:
+            return path
+        for dp in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+            x, y = pos[0] + dp[0], pos[1] + dp[1]
+            if 0 <= x < len(maze) and 0 <= y < len(maze[0]) and maze[x][y] == 0 and (x, y) not in visited:
+                visited.add((x, y))
+                queue.append(((x, y), path + [(x, y)]))
+    return None
+
+maze = [[0, 1, 0], [1, 1, 1], [0, 1, 0]]
+print(shortest_path(maze))"
+Implement Breadth-First Search (BFS) to find the shortest path between two nodes in an undirected graph. The graph is represented as an adjacency list.,"Input: [[1, 2, 3], [0, 2, 4], [0, 1, 3], [2, 3, 4]]
+Start node: 0
+End node: 4
+Output: 3",BFS is a graph traversal algorithm that explores all the vertices of a graph in breadth-first order. It starts from a source vertex and explores all the neighboring vertices at the current depth before moving on to vertices at the next depth level. The shortest path between two nodes is found by keeping track of the shortest distance from the source to each vertex.,"```python
+from collections import deque
+
+def bfs(graph, start, end):
+    visited = set()
+    queue = deque([(start, [start])])
+    while queue:
+        node, path = queue.popleft()
+        if node == end:
+            return len(path) - 1
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append((neighbor, path + [neighbor]))
+    return -1
+```"
+"Given a singly linked list, reverse the list using a pointer. The list will have an odd number of nodes.",Input: 1 -> 2 -> 3 -> None; Output: 3 -> 2 -> 1 -> None,"To reverse the list, we need to traverse the list and swap the next and previous nodes until we reach the middle of the list. Then, we need to return the new head of the list.","```python
+class ListNode: 
+    def __init__(self, val=0, next=None): 
+        self.val = val 
+        self.next = next
+
+def reverse_list(head: ListNode) -> ListNode:
+    reversed_head = None
+    current = head
+    while current is not None:
+        next_node = current.next
+        current.next = reversed_head
+        reversed_head = current
+        current = next_node
+    return reversed_head
+```"
+"Given a list of integers, find the count of pairs that sum up to a given target number.","Input: [1, 2, 3, 4, 5], 7; Output: 2","To find the count of pairs that sum up to a given target number, we can use a hash table (dictionary) to store the frequency of each number in the list. For each number in the list, we check if the difference between the number and the target number is in the hash table. If it is, we increment the count by 1. At the end, we return the count.","```python
+numbers = list(map(int, input().split()))
+target = int(input())
+hash_table = {} 
+count = 0
+
+for number in numbers:
+    if number in hash_table:
+        count += hash_table[number]
+    else:
+        hash_table[target - number] = numbers.count(number) 
+print(count)```"
+Write a program to count the number of unique elements in a list that appear more than n times in the list.,"Input: [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5]; n = 2
+Output: 4","The solution involves using a dictionary to count the frequency of each element in the list. Then, it iterates through the dictionary to find the elements that appear more than n times and counts their number.","```python
+from collections import Counter
+
+input_list, n = map(int, input().split())
+counts = Counter(input_list)
+result = sum(1 for element in counts.elements() if counts[element] > n)
+print(result)``"
+Implement Breadth-First Search (BFS) algorithm to find the shortest path between two nodes in a graph. The graph is represented as an adjacency list.,"Input: graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+}; start = 'A'; end = 'F'; Output: 3","The BFS algorithm explores the graph by starting at the root node and visiting all of its neighbors before moving on to their unvisited neighbors. It uses a queue to keep track of the nodes to be visited next. In this problem, we want to find the shortest path between two nodes in a graph. We start at the root node and explore the graph until we reach the destination node, keeping track of the number of edges traversed.","from collections import deque
+
+def bfs(graph, start, end):
+    visited = set()
+    queue = deque([(start, [start])])
+    while queue:
+        (node, path), _ = queue.popleft()
+        if node == end:
+            return len(path) - 1
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append((neighbor, path + [neighbor]))
+    return -1
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+}
+start = 'A'
+end = 'F'
+print(bfs(graph, start, end))"
+Implement Breadth-First Search (BFS) to find the shortest path between two nodes in a graph.,"Input: Adjacency List: [[1, 2, 3], [0, 2], [0, 3, 4], [1, 3, 5], [2, 4], [3, 5]]; Start Node: 0; End Node: 4; Output: [0, 1, 3, 4]",BFS is a graph traversal algorithm that explores all the vertices of a graph in breadth-first order. It starts from a source vertex and explores all the adjacent vertices at the current depth before moving on to vertices at the next depth level. The algorithm uses a queue to keep track of the vertices to be visited.,"```python
+from collections import deque
+
+class Graph:
+    def __init__(self, vertices):
+        self.graph = [[0 for _ in range(vertices)] for _ in range(vertices)]
+
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
+
+    def bfs(self, source, destination):
+        visited = [False] * len(self.graph)
+        queue = deque()
+        queue.append(source)
+        visited[source] = True
+        while queue:
+            current = queue.popleft()
+            if current == destination:
+                return self._get_path(visited, source, current)
+            for neighbor in self.graph[current]:
+                if not visited[neighbor]:
+                    visited[neighbor] = True
+                    queue.append(neighbor)
+        return None
+
+    def _get_path(self, visited, start, end):
+        path = []
+        while start != end:
+            path.append(start)
+            start = visited.index(start)
+        path.append(end)
+        return path[::-1]
+
+# Test the BFS algorithm
+graph = Graph(6)
+graph.add_edge(0, 1)
+graph.add_edge(0, 3)
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(1, 5)
+graph.add_edge(2, 4)
+graph.add_edge(3, 4)
+path = graph.bfs(0, 4)
+print(path)```"
+Write a function that counts the number of unique elements in a list using a set data structure.,"Input: [1, 2, 2, 3, 4, 4, 5]; Output: 4",We can use a set to store unique elements and then count the number of elements in the set to find the number of unique elements in the list.,"def count_unique(lst):
+    unique_set = set(lst)
+    return len(unique_set)"
+Implement Breadth-First Search (BFS) to find the shortest path between two nodes in an undirected graph with weighted edges.,"Input: adjacency list of a graph with 5 nodes and weights for edges:
+[[0, 2, 0, 10, 0],
+ [2, 0, 3, 5, 0],
+ [0, 3, 0, 0, 7],
+ [10, 5, 0, 0, 2],
+ [0, 0, 7, 2, 0]]
+Start node: 0
+End node: 4
+Output: The shortest path is [0, 1, 3, 4] and its length is 3.",BFS is a graph traversal algorithm that explores all the vertices of a graph in breadth-first order. It starts from a source vertex and explores all the neighboring vertices at the current depth before moving on to the vertices at the next depth level. The algorithm maintains a queue to keep track of the vertices to be visited and their distances from the source vertex.,"```python
+from collections import deque
+
+class Graph: 
+    def __init__(self, vertices): 
+        self.graph = [[0 for column in range(vertices)] for row in range(vertices)]
+    
+    def add_edge(self, u, v, w): 
+        self.graph[u][v] = w
+        self.graph[v][u] = w
+    
+    def bfs(self, s, d): 
+        queue = deque()
+        visited = [False] * (len(self.graph))
+        parent = [-1] * (len(self.graph))
+        queue.append(s)
+        visited[s] = True
+        while queue:
+            current = queue.popleft()
+            if current == d:
+                path = []
+                while current != -1:
+                    path.append(current)
+                    current = parent[current]
+                return path[::-1], len(path) - 1
+            for neighbor in range(len(self.graph)):
+                if self.graph[current][neighbor] > 0 and not visited[neighbor]:
+                    queue.append(neighbor)
+                    visited[neighbor] = True
+                    parent[neighbor] = current
+        return [], -1
+
+# Test the BFS algorithm
+graph = Graph(5)
+graph.add_edge(0, 1, 2)
+graph.add_edge(1, 2, 3)
+graph.add_edge(2, 0, 2)
+graph.add_edge(0, 3, 5)
+graph.add_edge(3, 4, 7)
+graph.add_edge(4, 1, 1)
+path, length = graph.bfs(0, 4)
+print(path, length)```"
+"Given a directed graph with no cycles, find the topological sort of the graph using Depth-First Search (DFS).","Input: adjacency_list = [ [], [2, 3], [1], [1, 3], [2] ]
+Output: [0, 1, 2, 3]","1. Initialize an empty list to store the topological sort. 
+2. Perform a Depth-First Search (DFS) on the graph. During the DFS, mark the visited nodes and store the nodes in the order they are visited. 
+3. The order of the nodes in the list is the topological sort of the graph.","from collections import defaultdict
+
+adj_list = defaultdict(list)
+visited = set()
+topological_sort = []
+def dfs(node):
+    visited.add(node)
+    for neighbor in adj_list[node]:
+        if neighbor not in visited:
+            dfs(neighbor)
+    topological_sort.insert(0, node)
+
+for node in adj_list:
+    if node not in visited:
+        dfs(node)
+print(topological_sort)"
+Implement Depth-First Search (DFS) to find the longest path in a directed graph with positive edge weights. The graph is represented as an adjacency list.,"Input: [[0, 1, 4], [1, 2, 4], [2, 3, 5], [3, 0, 2], [4, -1, -1]]
+Output: 6","To solve this problem, we first read the input data and create an adjacency list representing the graph. Then, we define a function to perform DFS and calculate the longest path from a given node. This function uses a recursive approach to explore the graph and keep track of the longest path found so far. Finally, we initialize the start node and call the DFS function to find the longest path in the graph.","def read_data():
+    data = list(map(list, list(input().strip().split(']['))))
+    graph = [[] for _ in range(len(data))]
+    for i, nodes in enumerate(data):
+        for node in nodes[1:-1]:
+            graph[i].append((node, data[node][i]))
+    return graph
+
+def dfs(node, parent, dist, path):
+    if not graph[node]:
+        return dist
+    max_dist = dist
+    for neighbor, weight in graph[node]:
+        if neighbor != parent:
+            new_dist = dfs(neighbor, node, dist + weight, path + [node])
+            if new_dist > max_dist:
+                max_dist = new_dist
+    return max_dist
+
+def solve():
+    graph = read_data()
+    max_dist = 0
+    for node in range(len(graph)):
+        max_dist = max(max_dist, dfs(node, -1, 0, [node]))
+    return max_dist
+
+graph = solve()
+print(graph)"
+Implement Breadth-First Search (BFS) algorithm to find the shortest path between two nodes in an undirected graph with weighted edges.,"Input: adjacency list representation of the graph and source and destination nodes.
+Output: The shortest path between the source and destination nodes.","We can solve this problem by using a queue to explore the graph level by level. At each level, we visit all the unvisited neighbors of the current node and update the distance to them. We keep track of the shortest path to each node and return the shortest path to the destination node.","```python
+from collections import deque
+
+def bfs(graph, start, end):
+    visited = set()
+    queue = deque([(start, [start])])
+    while queue:
+        node, path = queue.popleft()
+        if node == end:
+            return path
+        visited.add(node)
+        for neighbor, weight in graph[node].items():
+            if neighbor not in visited:
+                queue.append((neighbor, path + [neighbor]))
+    return None
+```"
+Write a recursive function to find the Fibonacci number at the nth position in a Fibonacci sequence.,Input: 7; Output: 13,"The Fibonacci sequence is a series of numbers in which each number is the sum of the two preceding ones, usually starting with 0 and 1. To find the nth Fibonacci number, we can use a recursive function that calls itself with n-1 and n-2 until we reach the base cases of 0 and 1.","def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)"
+"Given a list of integers, sort the list using the bubble sort algorithm and find the index of the middle element (if the list has an odd number of elements) or the average of the two middle elements (if the list has an even number of elements).","Input: [3, 5, 1, 2, 4, 6]
+Output: 3 (for odd number of elements) or (3 + 4) / 2 = 3.5 (for even number of elements)","We can solve this problem by implementing the bubble sort algorithm to sort the list, and then finding the middle element (or the average of the two middle elements) based on the number of elements in the sorted list.","```python
+
+numbers = list(map(int, input().split()))
+
+# Bubble sort
+for i in range(len(numbers) - 1):
+    for j in range(len(numbers) - i - 1):
+        if numbers[j] > numbers[j + 1]:
+            numbers[j], numbers[j + 1] = numbers[j + 1], numbers[j]
+
+# Find the middle element (or the average of the two middle elements)
+if len(numbers) % 2 == 1:
+    middle_index = len(numbers) // 2
+else:
+    middle_index1 = (len(numbers) - 1) // 2
+    middle_index2 = middle_index1 + 1
+    middle_element = (numbers[middle_index1] + numbers[middle_index2]) / 2
+print(middle_element)
+```"
+Implement a binary search algorithm to find the position of a target number in a sorted list.,"Input: [1, 3, 5, 7, 9], target=3
+Output: 1","The binary search algorithm works by repeatedly dividing the search interval in half. If the target is equal to the middle element, we return its index. If the target is less than the middle element, we search in the lower half. If the target is greater than the middle element, we search in the upper half. We repeat this process until we find the target or the search interval is empty.","```python
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+```"
+"Given a list of integers, find the number of unique pairs of indices (i, j) such that the absolute difference between the elements at indices i and j is exactly k. The list contains no duplicates.","Input: [1, 2, 3, 4, 5], k = 3
+Output: 2","We can solve this problem by iterating through the list and for each element, we find the elements that have an absolute difference of k. We store the indices of these elements in a set and check if the set contains a pair of indices (i, j) such that i < j. If such a pair is found, we increment a counter. At the end, we return the counter.","from collections import defaultdict
+
+N, k = map(int, input().split())
+nums = list(map(int, input().split()))
+
+count = 0
+indices = defaultdict(set)
+
+for num in nums:
+    for i in range(num - k, num + k + 1):
+        if i >= 0 and i < N and i not in indices[num]:
+            indices[num].add(i)
+            if i in indices and i + 1 not in indices[num]:
+                count += 1
+
+print(count)"
+Implement a binary search algorithm to find the position of a specific value in a sorted list. The list can contain duplicate values.,"Input: [1, 1, 2, 2, 3, 4, 4, 4, 5]; Output: 7 (index of 5)","The binary search algorithm works by repeatedly dividing the search interval in half. If the value of the search key is less than the item in the middle of the interval, the algorithm continues to search in the lower half. Otherwise, it continues in the upper half. This process continues until the value is found or the search interval is empty.","```python
+def binary_search(arr, target):
+    low = 0
+    high = len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+
+arr = [1, 1, 2, 2, 3, 4, 4, 4, 5]
+target = 5
+print(binary_search(arr, target))```"
+Sort a list of numbers using the Merge Sort algorithm.,"Input: [4, 3, 2, 1, 5]
+Output: [1, 2, 3, 4, 5]","Merge Sort is a divide-and-conquer algorithm that works by recursively dividing the input list into smaller sublists until each sublist contains only one element, then merging the sublists back together in sorted order. This algorithm has a time complexity of O(n log n).","```python
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result += left[i:]
+    result += right[j:]
+    return result
+
+arr = [4, 3, 2, 1, 5]
+print(merge_sort(arr))```"
+Implement a pointer-based algorithm to find the first non-repeating character in a string.,Input: 'abcabc'; Output: 'a',"We can use two pointers, one moving through the string and another keeping track of the last occurrence of each character. If the current character is different from the character at the last occurrence pointer, we print the current character and update the last occurrence pointer. If the current character is the same as the character at the last occurrence pointer, we move the current pointer to the next character.","def first_non_repeating(s):
+    last_occurrence = {} 
+    for i, char in enumerate(s):
+        if char in last_occurrence:
+            last_occurrence[char] = i
+        else:
+            last_occurrence[char] = -1
+    for i, char in enumerate(s):
+        if last_occurrence[char] == -1 or i != last_occurrence[char]:
+            return char"
+"Given a list of integers, find the count of pairs that have a difference of k.","Input: [1, 5, 3, 4, 2]; k = 2; Output: 2","We can use a counter to keep track of the frequency of each number in the list. Then, we iterate through the list and for each number, we check if there exists another number with a difference of k. If we find such a pair, we increment the count.","```python
+from collections import Counter
+
+k = int(input())
+numbers = list(map(int, input().split()))
+counter = Counter(numbers)
+count = 0
+
+for number in numbers:
+    if (number + k) in counter and number != (number + k):
+        count += 1
+print(count)```"
+Implement a pointer-based algorithm to find the kth smallest element in a sorted and rotated array.,"Input: [4, 5, 6, 1, 2, 3] (rotated to [5, 6, 1, 2, 3, 4]); k = 3
+Output: 2","We use two pointers, slow and fast, to traverse the array. The slow pointer moves one step at a time, while the fast pointer moves k steps at a time. If the fast pointer goes out of bounds, we reset it to the beginning of the array. When the fast pointer catches up with the slow pointer, the kth smallest element is the value at the slow pointer. If k is greater than the length of the array, we return None.","```python
+
+def kth_smallest(arr, k):
+    if len(arr) < k:
+        return None
+    slow, fast = 0, k - 1
+    while True:
+        if arr[slow] < arr[fast]:
+            if fast == len(arr) - 1:
+                return arr[slow]
+            fast += 1
+        else:
+            arr[slow], arr[fast] = arr[fast], arr[slow]
+            slow += 1
+            if fast == len(arr) - 1:
+                fast = 0
+
+# Test
+arr = [4, 5, 6, 1, 2, 3]
+k = 3
+print(kth_smallest(arr, k))```"
+Implement Breadth-First Search (BFS) to find the shortest path between two nodes in a graph.,"Input: Adjacency list representation of a graph:
+{
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+} 
+Start node: 'A', End node: 'F'
+Output: [['A', 'C'], ['C', 'F']]","1. Initialize a queue `q` and a dictionary `visited` to keep track of visited nodes.
+2. Add the start node to the queue and mark it as visited.
+3. While the queue is not empty, dequeue a node, check its neighbors, and enqueue the unvisited neighbors.
+4. Continue this process until the end node is dequeued.
+5. The shortest path is the list of nodes from the start node to the end node.","from collections import deque
+
+def bfs(graph, start, end):
+    q = deque([start])
+    visited = {start: True}
+    path = []
+    while q:
+        current = q.popleft()
+        if current == end:
+            path = list(reversed(path))
+            return path
+        for neighbor in graph[current]:
+            if neighbor not in visited:
+                q.append(neighbor)
+                visited[neighbor] = True
+                path.append(neighbor)
+    return None
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+}
+start = 'A'
+end = 'F'
+print(bfs(graph, start, end))"
+Implement a binary search algorithm to find the position of a target number in a sorted array. The array contains unique numbers.,"Input: [1, 3, 5, 7, 9], target=5; Output: 3","Binary search is an efficient search algorithm that works by repeatedly dividing the search interval in half. If the target is equal to the middle element, we return its index. If the target is less than the middle element, we search in the lower half. If the target is greater than the middle element, we search in the upper half.","```python
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+```"
+"Implement Depth-First Search (DFS) to find a path in a directed graph from a source node to a target node. The graph is represented as an adjacency list. The DFS should return True if there is a path from the source to the target, and False otherwise.","Input: {
+    'A': [B, C],
+    'B': [A, D],
+    'C': [A, D, E],
+    'D': [B, C, F],
+    'E': [C],
+    'F': [D]
+} source='A', target='F'
+Output: True","The DFS algorithm explores the graph by visiting each node and its adjacent nodes recursively. It starts from the source node and checks if the target node is visited. If the target node is visited, the DFS returns True. If the target node is not visited, the DFS recursively explores the adjacent nodes of the current node. If all adjacent nodes are explored and the target node is not visited, the DFS returns False.","```python
+from collections import defaultdict
+
+def dfs(graph, source, target):
+    visited = set()
+    def dfs_helper(node):
+        if node == target:
+            return True
+        if node in visited:
+            return False
+        visited.add(node)
+        for neighbor in graph[node]:
+            if dfs_helper(neighbor):
+                return True
+        visited.remove(node)
+        return False
+    return dfs_helper(source)
+
+# Example usage:
+graph = defaultdict(list)
+# ... (fill the graph with edges)
+print(dfs(graph, 'A', 'F'))```"
+Implement Breadth-First Search (BFS) to find the shortest path in a graph with weighted edges.,"Input: adjacency list of a graph with weighted edges:
+[[0, 1, 0], [0, 0, 2], [1, 2, 0]]
+Starting vertex: 0
+Output: [0, 1, 2]",BFS is a graph traversal algorithm that explores all the vertices of a graph in breadth-first order. It starts from a source vertex and explores all the adjacent vertices at the current depth before moving on to the next level of vertices. The shortest path is found by keeping track of the shortest distance from the source to each vertex.,"```python
+from collections import deque
+
+def bfs(graph, start):
+    visited = [False] * len(graph)
+    queue = deque([(start, [start])])
+    while queue:
+        (current, path) = queue.popleft()
+        if not visited[current]:
+            visited[current] = True
+            for neighbor, weight in enumerate(graph[current]):
+                if not visited[neighbor]:
+                    queue.append((neighbor, path + [neighbor]))
+    return path
+
+# Example usage:
+graph = [[0, 1, 0], [0, 0, 2], [1, 2, 0]]
+print(bfs(graph, 0))```"
+Implement a sorting algorithm called 'Bubble Sort' to sort a list of integers in ascending order.,"Input: [5, 3, 1, 4, 2]; Output: [1, 2, 3, 4, 5]","Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted.","def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr"
+Write a function to count the number of unique elements in a list that appear more than n times.,"Input: [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5]; Output: 2","To solve this problem, we first create a function `count_elements(lst)` to count the number of occurrences of each element in the list. Then, we create a function `count_multiples(lst, n)` to find the number of unique elements that appear more than n times. The main function `count_multiples(lst)` takes the list as input and calls the `count_multiples(lst, 1)` function to find the number of elements that appear more than once.","```python
+def count_elements(lst):
+    counter = {} 
+    for element in lst:
+        if element in counter:
+            counter[element] += 1
+        else:
+            counter[element] = 1
+    return counter
+
+def count_multiples(lst, n):
+    counter = count_elements(lst)
+    return sum(1 for element, count in counter.items() if count > n)
+
+def main():
+    lst = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5]
+    print(count_multiples(lst))
+
+if __name__ == '__main__':
+    main()```"
+Implement a pointer-based algorithm to find the first non-repeating character in a string.,Input: 'Mississippi'; Output: 'M',"The problem requires finding the first character that appears only once in a given string. We can use a pointer-based approach where we iterate through the string and use two pointers, one to traverse the string and another to keep track of the last position of the character we have encountered. If we encounter a character that is not at the position of the last encountered character, it means that the character appears only once in the string.","```python
+def first_non_repeating(s):
+    last = {} # dictionary to store the last position of each character
+    for i, c in enumerate(s): # enumerate function to get both index and character
+        if c in last:
+            last[c] = i # update the last position of the character
+        else:
+            print(c) # print the first non-repeating character and break the loop
+            break
+    # if no non-repeating character is found
+    print('No non-repeating character found')
+
+# Test cases
+print(first_non_repeating('Mississippi')) # Output: M
+print(first_non_repeating('Hello World')) # Output: H
+print(first_non_repeating('AABBCC')) # Output: No non-repeating character found
+```"
+"Count the number of unique paths in a grid with obstacles where each step can be either up, down, left, or right, and the path must end at the bottom-right corner.","Input: 
+3
+1 0 0
+0 1 0
+0 0 1
+Output: 2","To solve this problem, we can use dynamic programming and memoization to store the number of unique paths to each cell in the grid. The base case is the bottom-right corner, which has only one path. For each cell, we count the number of unique paths from the neighboring cells that are not obstacles and add them to the total number of paths to the current cell. The final answer is the number of paths to the top-left corner.","```python
+def unique_paths_with_obstacles(grid):
+    m, n = len(grid), len(grid[0])
+    dp = [[0] * n for _ in range(m)]
+    obstacles = set()
+    for i, row in enumerate(grid):
+        for j, cell in enumerate(row):
+            if cell == 1:
+                obstacles.add((i, j))
+    for i in range(m - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            if (i, j) not in obstacles:
+                if i == m - 1 and j == n - 1:
+                    dp[i][j] = 1
+                elif (i + 1, j) not in obstacles:
+                    dp[i][j] += dp[i + 1][j]
+                if j + 1 < n and (i + 1, j + 1) not in obstacles:
+                    dp[i][j] += dp[i + 1][j + 1]
+    return dp[0][0]
+```"
+Implement a recursive function to find the Fibonacci number at a given position.,Input: 8; Output: 21,"The Fibonacci sequence is a series of numbers in which each number is the sum of the two preceding ones, starting from 0 and 1. To find the Fibonacci number at a given position, we can use a recursive function that calls itself with the two preceding positions until we reach the base cases of 0 or 1.","def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n - 1) + fibonacci(n - 2)"
+"Given a list of integers, find the maximum sum of a contiguous subarray with at least k elements. If there is no such subarray, return 0.","Input: [1, -2, 3, 10, -4, 7, 2, -5]; Output: 18
+k = 3
+Input: [-1, -2, -3]; Output: 0
+k = 3","1. Initialize two variables, max_sum and current_sum, to store the maximum sum and the current sum of the subarray respectively. 
+2. Iterate through each element in the list. 
+3. If the current sum is less than 0 and k is not yet reached, reset the current sum to 0. 
+4. If the current sum is greater than max_sum and the subarray has at least k elements, update max_sum. 
+5. If the subarray has less than k elements, update current_sum with the current element. 
+6. Return max_sum if it is greater than 0, otherwise return 0.","```python
+k, nums = int(input()), list(map(int, input().split()))
+max_sum, current_sum = 0, 0
+for num in nums:
+    if current_sum < 0 and k > 1:
+        current_sum = 0
+    elif num > current_sum:
+        current_sum = num
+    else:
+        current_sum += num
+    if current_sum > max_sum and len(nums[current_sum - k: current_sum + 1]) >= k:
+        max_sum = current_sum
+print(max_sum)```"
+Implement a Breadth-First Search (BFS) algorithm to find the shortest path between two nodes in a graph where each edge has a weight. The graph is represented as an adjacency list.,"Input: graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D'],
+    'C': ['A', 'D', 'E'],
+    'D': ['B', 'C'],
+    'E': ['C']
+} and start_node = 'A', end_node = 'E'.
+Output: The shortest path is A -> B -> C -> E with a total weight of 2.","We can solve this problem using BFS algorithm. Start from the start_node and explore all possible paths using a queue data structure. For each node, check if it has been visited before and if it is the end_node. If it is a new node, update the shortest path to that node and its total weight. The shortest path to the end_node is the path with the minimum total weight.","import collections
+
+def bfs(graph, start_node, end_node):
+    queue = collections.deque([(start_node, [start_node], 0)])
+    visited = set()
+    while len(queue) > 0:
+        node, path, weight = queue.popleft()
+        if node == end_node:
+            return path, weight
+        if node in visited:
+            continue
+        visited.add(node)
+        for neighbor in graph[node]:
+            new_path = path + [neighbor]
+            new_weight = weight + graph[node][neighbor]
+            queue.append((neighbor, new_path, new_weight))
+    return None
+
+# Test the function
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D'],
+    'C': ['A', 'D', 'E'],
+    'D': ['B', 'C'],
+    'E': ['C']
+}
+start_node = 'A'
+end_node = 'E'
+path, weight = bfs(graph, start_node, end_node)
+if path is not None:
+    print(f'The shortest path is {path} with a total weight of {weight}')
+else:
+    print('No path found')"
+"Given a list of n integers, sort them using the bubble sort algorithm such that the difference between adjacent elements is as large as possible.","Input: n=5, numbers=[3, 2, 1, 5, 4]; Output: [5, 4, 3, 2, 1]","Bubble sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. In this case, we want to maximize the difference between adjacent elements. We can modify the bubble sort algorithm to keep track of the maximum difference found so far and swap only if the difference is less than the current maximum difference.","```python
+def max_diff_bubble_sort(numbers):
+    n = len(numbers)
+    max_diff = 0
+    for i in range(n):
+        for j in range(n-i-1):
+            if numbers[j] > numbers[j+1] and numbers[j+1] - numbers[j] > max_diff:
+                numbers[j], numbers[j+1] = numbers[j+1], numbers[j]
+                max_diff = numbers[j+1] - numbers[j]
+    return numbers
+```"
+Implement Breadth-First Search (BFS) algorithm to find the shortest path between two nodes in an undirected graph with weighted edges.,"Input: adjacency list of a graph with 5 nodes and edge weights as follows:
+[([1, 2, 4], 1), ([0, 3, 5], 2), ([0, 1, 3, 4], 3), ([2, 3, 4], 4), ([1, 3], 5)]
+Start node: 0
+End node: 4
+Output: The shortest path is [0, 1, 3, 4] and the length of the path is 3.",BFS is a graph traversal algorithm that explores all the vertices of a graph in breadth-first order. It starts from a source vertex and explores all the adjacent vertices at the current depth before moving on to vertices at the next depth level. The algorithm maintains a queue to keep track of the vertices to be visited next and a visited set to avoid revisiting the same vertex.,"```python
+from collections import deque
+
+class Graph: 
+    def __init__(self, vertices): 
+        self.graph = [[0 for column in range(vertices)] for row in range(vertices)]
+        self.V = vertices
+
+    def addEdge(self, u, v, w): 
+        self.graph[u][v] = w
+        self.graph[v][u] = w
+
+    def BFS(self, s): 
+        visited = [False] * self.V
+        queue = deque()
+        queue.append(s)
+        visited[s] = True
+        shortest_path = []
+
+        while queue:
+            s = queue.popleft()
+            shortest_path.append(s)
+            for i in range(self.V):
+                if self.graph[s][i] > 0 and not visited[i]:
+                    queue.append(i)
+                    visited[i] = True
+
+        return shortest_path
+
+# Test the BFS algorithm
+graph = Graph(5)
+graph.addEdge(0, 1, 4)
+graph.addEdge(1, 2, 1)
+graph.addEdge(0, 3, 2)
+graph.addEdge(2, 3, 3)
+graph.addEdge(2, 4, 5)
+graph.addEdge(1, 3, 8)
+
+print(graph.BFS(0), len(graph.BFS(0)) - 1)
+```"
+Write a recursive function to find the Fibonacci sequence up to nth term.,"Input: 10; Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]","The Fibonacci sequence is a series of numbers in which each number is the sum of the two preceding ones, usually starting with 0 and 1. To find the nth term, we can use a recursive function that calls itself with the previous two terms until it reaches the base case (n = 0 or n = 1).","```python
+def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return(fibonacci(n-1) + fibonacci(n-2))
+
+num = int(input())
+print([fibonacci(i) for i in range(num+1)])```"
+Write a function to count the number of unique elements in a list that appear more than n times.,"Input: [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]; Output: 4
+Input: [1, 2, 3, 4, 5]; Output: 0","To solve this problem, we first sort the input list and then iterate through the list. If the current element is the same as the previous element, we check if it has appeared more than n times. If it has, we increment a counter. At the end, we return the counter.","def count_repeated_elements(lst, n):
+	lst.sort()
+	count = 0
+	prev = lst[0]
+	for i in range(1, len(lst)):
+		if lst[i] == prev and lst.count(lst[i]) > n:
+			count += 1
+		prev = lst[i]
+	return count"
+Implement Depth-First Search (DFS) to find the longest path in a directed graph with weighted edges.,"Input: adjacency_list = [(0, 2), (0, 3), (1, 2), (1, 3), (2, 4), (3, 4)]
+weights = [1, 2, 3, 2, 4, 5]
+start_node = 0
+Output: 14","The problem can be solved by using DFS to explore the graph and keep track of the longest path found so far. The algorithm should visit each node in the graph, explore its neighbors, and update the longest path if necessary.","```python
+from collections import defaultdict
+
+adjacency_list = [(0, 2), (0, 3), (1, 2), (1, 3), (2, 4), (3, 4)]
+weights = [1, 2, 3, 2, 4, 5]
+start_node = 0
+
+graph = defaultdict(list)
+for node, neighbor in adjacency_list:
+    graph[node].append(neighbor)
+    graph[neighbor].append(node)
+
+visited = set()
+longest_path = 0
+
+def dfs(node, current_path, current_weight):
+    visited.add(node)
+    current_path.append(node)
+    if node == start_node:
+        longest_path = max(longest_path, current_weight)
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            dfs(neighbor, current_path, current_weight + weights[node] - weights[neighbor])
+    current_path.pop()
+
+for node in graph:
+    if node not in visited:
+        dfs(node, [], 0)
+print(longest_path)```"
+Write a function that counts the number of occurrences of a given target value in a list of integers using the count algorithm.,"Input: [1, 2, 3, 2, 2, 4, 2]; Target: 2; Output: 3","To solve this problem, we iterate through the list and count the number of times the target value appears. The count algorithm is used to find the frequency of an element in a list.","def count_target(lst, target):
+    count = 0
+    for num in lst:
+        if num == target:
+            count += 1
+    return count"
+"Given a singly linked list, find the middle node of the list. If the list has an even number of nodes, return the second middle node.","Input: 1 -> 2 -> 3 -> 4 -> 5 -> 6
+Output: 3","The problem can be solved by iterating through the list and keeping track of the number of nodes. When the number of nodes is half the total number of nodes, we have reached the middle node (or the second middle node if the total number of nodes is even).","```python
+class ListNode: 
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def middle_node(head: ListNode) -> ListNode:
+    mid = slow = fast = head
+    while fast and fast.next: 
+        slow = slow.next
+        fast = fast.next.next
+    return slow
+```"
+Implement Breadth-First Search (BFS) algorithm to find the shortest path between two nodes in an undirected graph.,"Input: Adjacency list representation of a graph and two nodes (A, B); Output: The shortest path between A and B.","We start from the source node (A) and add it to a queue. We also mark it as visited. At each step, we dequeue a node, explore its unvisited neighbors, and enqueue them. We repeat this process until we find the destination node (B) or the queue is empty. The shortest path is the sequence of nodes from the source to the destination.","```python
+from collections import deque
+
+class Graph: 
+    def __init__(self, vertices): 
+        self.graph = [[0 for column in range(vertices)] for row in range(vertices)]
+    
+    def add_edge(self, u, v): 
+        self.graph[u][v] = 1
+        self.graph[v][u] = 1
+    
+    def bfs(self, s, d): 
+        queue = deque()
+        visited = [False] * len(self.graph)
+        queue.append(s)
+        visited[s] = True
+        path = []
+        
+        while queue: 
+            u = queue.popleft()
+            if u == d: 
+                path.append(u)
+                while path: 
+                    path.append(path.pop(0))
+                return path[::-1]
+            
+            for i in range(len(self.graph)): 
+                if not visited[i] and self.graph[u][i] == 1: 
+                    queue.append(i)
+                    visited[i] = True
+        return []
+    
+def __starting_point(): 
+    g = Graph(9)
+    g.add_edge(0, 1)
+    g.add_edge(0, 7)
+    g.add_edge(1, 2)
+    g.add_edge(1, 7)
+    g.add_edge(2, 3)
+    g.add_edge(2, 5)
+    g.add_edge(2, 8)
+    g.add_edge(7, 6)
+    g.add_edge(7, 8)
+    g.add_edge(6, 7)
+    g.add_edge(6, 8)
+    g.add_edge(8, 3)
+    g.add_edge(8, 5)
+    print(g.bfs(0, 5))
+__starting_point()
+```"
+Implement a binary search algorithm to find a specific target value in a sorted list of integers. The list can contain duplicates.,"Input: [1, 1, 3, 4, 4, 5, 6] and target value 4; Output: Index 3","The binary search algorithm works by repeatedly dividing the search interval in half. If the target value is less than the middle element, we search in the lower half of the interval. If the target value is greater than the middle element, we search in the upper half of the interval. We continue this process until we find the target value or the search interval is empty.","Here is a Python solution that uses the binary search algorithm.
+
+```
+def binary_search(arr, target):
+    low = 0
+    high = len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+
+def __starting_point():
+    arr = [1, 1, 3, 4, 4, 5, 6]
+    target = 4
+    index = binary_search(arr, target)
+    print(index)
+
+__starting_point()
+```"
+Implement a pointer-based algorithm to find the first occurrence of a target value in a sorted array. The array may contain duplicates.,"Input: [2, 3, 3, 4, 5], target = 3; Output: 1","We use a pointer to traverse the array from the beginning. If the current element is less than the target, we move the pointer to the next element. If the current element is equal to the target, we return the index. If the array is empty, we return -1.","def find_first_occurrence(arr, target):
+    n = len(arr)
+    if n == 0:
+        return -1
+    left, right = 0, n - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            if mid == 0 or arr[mid - 1] != target:
+                return mid
+            right = mid - 1
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1"
+Implement Breadth-First Search (BFS) algorithm to find the shortest path between two nodes in an undirected graph.,"Input: Adjacency list representation of a graph: [[1, 2, 4], [0, 1, 3, 4], [2, 3, 5], [0, 2, 3, 5, 6], [4, 5]]; Start node: 0; End node: 4; Output: [0, 2, 3, 4]","To solve this problem, we use a queue to traverse the graph level by level. We start from the given start node and explore all its neighbors. For each neighbor, we mark it as visited and add it to the queue. We repeat this process until we find the end node or the queue is empty. The shortest path is the list of nodes visited in the order they were visited.","from collections import deque
+
+def bfs(graph, start, end):
+    visited = set()
+    queue = deque([start])
+    path = []
+    while queue:
+        current = queue.popleft()
+        if current == end:
+            path = list(reversed(path))
+            return path
+        visited.add(current)
+        for neighbor in graph[current]:
+            if neighbor not in visited:
+                queue.append(neighbor)
+    return None
+
+# Example usage:
+graph = [[1, 2, 4], [0, 1, 3, 4], [2, 3, 5], [0, 2, 3, 5, 6], [4, 5]]
+start = 0
+end = 4
+print(bfs(graph, start, end))"
+Implement Depth-First Search (DFS) to find the longest path in a directed graph. The graph is represented as an adjacency list.,"Input: [[1, 2, 3], [2, 4], [3, 5], [4], [5]]
+Output: 4",We start from any node in the graph and explore as far as possible along each branch before backtracking. We keep track of the longest path found so far. The longest path is the one with the maximum number of edges.,"```python
+from collections import defaultdict
+
+def dfs(node, graph, visited, path, longest_path):
+    visited[node] = True
+    path.append(node)
+    longest_path = max(longest_path, len(path) - 1)
+    for neighbor in graph[node]:
+        if not visited[neighbor]:
+            dfs(neighbor, graph, visited, path, longest_path)
+        path.pop()
+    return longest_path
+
+def longest_path(graph):
+    visited = [False] * len(graph)
+    longest_path = 0
+    for node in range(len(graph)):
+        if not visited[node]:
+            longest_path = max(longest_path, dfs(node, graph, visited, [], longest_path))
+    return longest_path
+
+# Test
+graph = [[1, 2, 3], [2, 4], [3, 5], [4], [5]]
+print(longest_path(graph))
+```"
+Implement Breadth-First Search (BFS) to find the shortest path between two nodes in an undirected graph with weighted edges.,"Input: adjacency_list = [[0, 1, 2], [0, 3, 4], [2, 3, 5], [1, 4, 5], []]; start_node = 0; end_node = 4; Output: 3","To solve this problem, we use a queue to traverse the graph level by level. We start from the given start node and explore all its adjacent nodes at the current level. For each adjacent node, we check if it is the target node or not. If it is, we return the number of edges traversed to reach it. If it's not, we add it to the queue and continue the exploration from the next level.","from collections import deque
+
+adjacency_list = [[0, 1, 2], [0, 3, 4], [2, 3, 5], [1, 4, 5], []]
+start_node = 0
+end_node = 4
+
+visited = set()
+queue = deque([(start_node, 0)])
+
+while queue:
+    current_node, current_distance = queue.popleft()
+    if current_node == end_node:
+        return current_distance
+    visited.add(current_node)
+    for neighbor, weight in enumerate(adjacency_list[current_node]):
+        if neighbor not in visited:
+            queue.append((neighbor, current_distance + weight))
+
+return -1"
+Implement a pointer-based algorithm to find the maximum sum of a subarray in an array. The subarray can start at any index and can have any length.,"Input: [1, -2, 3, 10, -4, 7, 2, -5]","The reasoning is to use two pointers, one starting at the beginning of the array and the other at the end. The sum of the subarray is calculated for each possible subarray by moving the starting pointer forward and the ending pointer backward. The maximum sum is kept track of and returned at the end.","```python
+arr = list(map(int, input().split()))
+max_sum, start, end = float('-inf'), 0, len(arr) - 1
+
+while start < end:
+    sum_ = sum(arr[start:end + 1])
+    if sum_ > max_sum:
+        max_sum, s, e = sum_, start, end
+    if sum_ < 0:
+        start += 1\    else:
+        end -= 1
+
+print(max_sum)```"
+Implement Breadth-First Search (BFS) to find the shortest path between two nodes in an undirected graph with weighted edges.,"Input: adjacency list of a graph with weighted edges:
+[[0, 1, 2], [0, 3], [1, 2, 4], [2], [3, 4], []]
+Start node: 0
+End node: 4
+Output: 3","We use a queue to traverse the graph level by level. We start from the start node and add it to the queue. We also initialize a dictionary to store the shortest path from the start node to each node. We iterate through the queue until it is empty. For each node in the queue, we check if it is the end node. If it is, we return the length of the path. If it is not, we iterate through the neighbors of the node and check if they are already in the shortest path dictionary. If they are not, we calculate the new length of the path and add the neighbor to the queue and the shortest path dictionary.","```python
+from collections import deque
+
+class Graph: 
+    def __init__(self, vertices): 
+        self.graph = [[0 for column in range(vertices)] for row in range(vertices)]
+        self.visited = [False] * vertices
+
+    def add_edge(self, source, destination, weight): 
+        self.graph[source][destination] = weight
+        self.graph[destination][source] = weight
+
+    def shortest_path(self, source, destination): 
+        q = deque()
+        q.append((source, None))
+        shortest_path = {source: 0}
+
+        while q:
+            u = q.popleft()[0]
+            if u == destination:
+                return self.shortest_path_length(destination)
+            for index, v in enumerate(self.graph[u]):
+                if v > 0 and self.visited[index] == False:
+                    self.visited[index] = True
+                    new_path_length = shortest_path[u] + v
+                    q.append((index, u))
+                    shortest_path[index] = new_path_length
+
+        return -1
+
+    def shortest_path_length(self, node): 
+        return shortest_path[node]
+
+graph = Graph(6)
+graph.add_edge(0, 1, 2)
+graph.add_edge(0, 3, 4)
+graph.add_edge(1, 2, 8)
+graph.add_edge(1, 4, 7)
+graph.add_edge(2, 4, 1)
+graph.add_edge(2, 5, 2)
+graph.add_edge(3, 2, 9)
+graph.add_edge(3, 5, 3)
+graph.add_edge(4, 5, 5)
+
+print(graph.shortest_path(0, 4))
+```"
